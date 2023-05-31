@@ -1,6 +1,7 @@
 import 'package:deliver_app/Compoentes/MyButton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../Compoentes/Textfileddetials.dart';
 
@@ -56,31 +57,34 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         foregroundColor: Colors.black,
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/12.png',
-            height: 250,
-          ),
-          const Text('Enter your Email'),
-          const SizedBox(
-            height: 20,
-          ),
-          MyTextfield(
-              inputTypedis: TextInputType.emailAddress,
-              //   selectIcon: Icon(Icons.password_outlined),
-              hintText: 'email',
-              textController: emailcontroller,
-              obscureText: false),
-          const SizedBox(
-            height: 20,
-          ),
-          MyButton(
-            TextLable: 'Reset your password',
-            onTap: passwordreset,
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/12.png',
+              height: 250,
+            ),
+            const Text('Enter your Email'),
+            const SizedBox(
+              height: 20,
+            ),
+            MyTextfield(
+                df: FilteringTextInputFormatter.deny(''),
+                inputTypedis: TextInputType.emailAddress,
+                //   selectIcon: Icon(Icons.password_outlined),
+                hintText: 'email',
+                textController: emailcontroller,
+                obscureText: false),
+            const SizedBox(
+              height: 20,
+            ),
+            MyButton(
+              TextLable: 'Reset your password',
+              onTap: passwordreset,
+            ),
+          ],
+        ),
       ),
     );
   }

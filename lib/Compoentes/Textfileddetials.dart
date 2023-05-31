@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class MyTextfield extends StatelessWidget {
-  final textController;
+  final TextEditingController? textController;
   final String hintText;
   final bool obscureText;
   final TextInputType inputTypedis;
+  final TextInputFormatter df;
   // final Icon selectIcon;
   const MyTextfield({
     super.key,
@@ -12,6 +14,7 @@ class MyTextfield extends StatelessWidget {
     required this.hintText,
     required this.obscureText,
     required this.inputTypedis,
+    required this.df,
     // required this.selectIcon
   });
 
@@ -20,11 +23,16 @@ class MyTextfield extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: TextField(
+        inputFormatters: <TextInputFormatter>[df],
         keyboardType: inputTypedis,
         showCursor: true,
-        controller: textController,
+        controller: textController!,
         obscureText: obscureText,
         decoration: InputDecoration(
+            label: Text(
+              hintText,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             //  icon: selectIcon,
             enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.white),
@@ -34,7 +42,6 @@ class MyTextfield extends StatelessWidget {
             ),
             fillColor: Colors.grey.shade200,
             filled: true,
-            hintText: hintText,
             hintStyle: TextStyle(color: Colors.grey..shade900)),
       ),
     );

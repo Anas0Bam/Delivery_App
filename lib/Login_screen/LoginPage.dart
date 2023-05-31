@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:flutter/services.dart';
+
 import '../Compoentes/Textfileddetials.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -84,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                   Text('Welcome to Manadib'),
                   SizedBox(height: 15),
                   MyTextfield(
+                      df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.emailAddress,
                       hintText: 'email',
                       //   selectIcon: null,
@@ -93,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 15,
                   ),
                   MyTextfield(
+                      df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.visiblePassword,
                       //   selectIcon: Icon(Icons.password_outlined),
                       hintText: 'password',

@@ -1,4 +1,5 @@
 import 'package:deliver_app/Login_screen/LoginOrRegister.dart';
+import 'package:deliver_app/Login_screen/VeryfiAut.dart';
 import 'package:deliver_app/TabsScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,10 +15,16 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot) {
           //user logged in
           if (snapshot.hasData) {
-            return const TabsScreen();
+            return TabsScreen();
+            ;
           } else {
             return const LoginOrRegister();
           }
+          // } else {
+          //   {
+          //     return TabsScreen();
+          //   }
+          // }
 
           //user is Not logged in
         },
