@@ -1,14 +1,14 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deliver_app/widgets/MyButton.dart';
+import 'package:deliver_app/widgets/Textfileddetials.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 
-import '../Compoentes/Textfileddetials.dart';
 // import '../Compoentes/square_tile.dart';
 import 'package:flutter/material.dart';
 
-import '../Compoentes/MyButton.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? ontap;
