@@ -1,12 +1,12 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:deliver_app/widgets/MyButton.dart';
+import 'package:deliver_app/widgets/Textfileddetials.dart';
 import 'package:flutter/services.dart';
 
-import '../Compoentes/Textfileddetials.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../Compoentes/MyButton.dart';
 import 'ForgotPasswordPage.dart';
 
 class LoginPage extends StatefulWidget {

@@ -29,7 +29,8 @@ class HomePage extends StatelessWidget {
       // home: AuthPage(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        appBarTheme: const AppBarTheme(
+          fontFamily: "Schyler",
+          appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
               color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
           color: Colors.white,
