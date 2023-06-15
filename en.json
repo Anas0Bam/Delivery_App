@@ -1,5 +1,51 @@
 {
-    "header": "Welcome to our tutorial!",
-    "home": "Home page"
+    "header_onboarding1": "Order form the stores around you do not go far",
+    "header_onboarding2": "Choose the area wherever you are",
+    "header_onboarding3": "Order whatever you want and we will deliver it to where you are ASAP",
+    "subtel_onboarding1": "We provide a carior in your same area",
+    "subtel_onboarding2": "Do not care about the carior distance, we will take car of that" ,
+    "Login": "Login",
+    "Register": "Register",
+    "ortextFirstPag":"Or you can register with",
+    "NotAmember": "Not a member?",
+    "ForgotPass":"Forgot password?",
+    "Email":"Email",
+    "Password":"Password",
+    "Passwordconf":"Confrim password",
+
+    "Supermarket":"Supermarket",
+   
+    "Resturant":"Resturants",
+    "Landury" :"Landury",
+    
+    "Opentext":"Open",
+    "Closetext":"Close",
+
+    "Welcome title":"Welcome to Manadib",
+    "Categories":"Categories",
+    "Location":"Location",
+    "More":"More",
+    "Near":"Near by",
+    "Maintenace": "This page is under Maintenace",
+    "Logout":"Logout",
+    "Aboutus":"About us",
+    "Aboutustext": "Mnadib is a comapny that services you in the same neighbourhood without needing to request a far carrior",
+    "phonenum":"Phone number",
+    "Adress":"Enter your address",
+
+    "ProfilePgae":"User page",
+    "#######################":"كل ماهوا تحت هذا النص هوا له علاقة بتفاصيل صفحة المتسخدم",
+    "Adressnew":"Enter your new address",
+    "Editadd":"Edit your address",
+    "Mydetials":"My personal information",
+    "FirstNa":"First Name",
+    "LastNa":"Last Name",
+    "edit":"Save",
+    "Cancel":"Cancel",
+    "EditLastNa":"Edit your last naem",  
+    "EditFirstNa":"Edit your First name",
+    "EditEmial":"Edit your email",  
+    "EditPho":"Edit your phone number"
+
   }
   
