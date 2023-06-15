@@ -1,6 +1,7 @@
 // import 'package:deliver_app/Login_screen/LoginOrRegister.dart';
 import 'package:deliver_app/Login_screen/LoginOrRegister.dart';
 import 'package:deliver_app/TabsScreen.dart';
+import 'package:deliver_app/intro_screens/onboardingscreen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,7 +19,7 @@ class AuthPage extends StatelessWidget {
           if (snapshot.hasData) {
             return TabsScreen();
           } else {
-            return const LoginOrRegister();
+            return const Onboardingscreen();
           }
         },
       ),
