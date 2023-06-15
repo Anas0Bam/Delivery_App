@@ -13,13 +13,13 @@
     "Password":"رمز الدخول",
 
 
- "Supermarket":"تموينات",
+    "Supermarket":"تموينات",
    
     "Resturant":"بوفيه",
-   "Landury" :"مغاسل",
+    "Landury" :"مغاسل",
     
-"Opentext":"مفتوح",
-"Closetext":"مغلق",
+    "Opentext":"مفتوح",
+    "Closetext":"مغلق",
 
 
 
@@ -45,7 +45,10 @@
     "LastNa":"الأسم الأخير",
     "edit":"حفط",
     "Cancel":"إلغاء",
-    "EditLastNa":"عدل على أسمك الأخير",   "EditFirstNa":"عدل على أسمك الأخير","EditEmial":"أدخل بريدك الإلكتروني الجديد",  "EditPho":"أدخل رقم جوالك الجديد"
+    "EditLastNa":"عدل على أسمك الأخير",  
+    "EditFirstNa":"عدل على أسمك الأخير",
+    "EditEmial":"أدخل بريدك الإلكتروني الجديد",  
+    "EditPho":"أدخل رقم جوالك الجديد"
 
 
 
