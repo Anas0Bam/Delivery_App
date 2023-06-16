@@ -12,9 +12,11 @@
     "Email":"Email",
     "Password":"Password",
     "Passwordconf":"Confrim password",
+    "money" :"SR",
+    "deitals":"Detials order",
 
     "Supermarket":"Supermarket",
-   
+    "order": "Your orders",
     "Resturant":"Resturants",
     "Landury" :"Landury",
     

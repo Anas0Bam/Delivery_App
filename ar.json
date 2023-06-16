@@ -12,8 +12,10 @@
     "Email":"البريد الإلكتروني",
     "Password":"كلمة المرور",
     "Passwordconf":"تأكيد كلمة المرور",
-
+    "money" :"ريال",
+    "deitals":"تفاصيل الطلب",
     "Supermarket":"تموينات",
+    "order": "طلباتك",
    
     "Resturant":"بوفيه",
     "Landury" :"مغاسل",

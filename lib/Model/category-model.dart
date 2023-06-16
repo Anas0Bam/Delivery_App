@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
-
-class Category{
-
+class Category {
   String _name;
   String _icon;
 
