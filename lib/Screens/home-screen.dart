@@ -15,10 +15,9 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF32d951),
         onPressed: () {},
-        child: Image.asset('assets/whats-logo.png',width: width*0.09,),
-        child: Icon(
-          Icons.support_agent,
-          color: Colors.black,
+        child: Image.asset(
+          'assets/whats-logo.png',
+          width: width * 0.09,
         ),
       ),
       body: SafeArea(
@@ -149,7 +148,6 @@ class HomeScreen extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: width * 0.05, right: width * 0.05),
                 child: Row(
-
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -176,56 +174,6 @@ class HomeScreen extends StatelessWidget {
                   itemCount: placeList.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            color: colorLightGray,
-                            border: Border.all(color: colorDarkGray),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.3), // Replace with your desired shadow color
-                                blurRadius: 5, // Replace with your desired blur radius
-                                spreadRadius: 0, // Set to 0 to restrict shadow to the bottom
-                                offset: Offset(0, 8), // Adjust the offset for desired shadow position
-                              ),
-                            ],
-                          ),
-                          margin: EdgeInsets.only(left: width * 0.05, right: 2),
-                          padding: EdgeInsets.symmetric(vertical: height * 0.005, horizontal: width * 0.05),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("open", style: TextStyle(color: Color(0xFF49EE20), fontSize: 18)),
-                              Image.asset(
-                                placeList[index].image,
-                                height: height * 0.2,
-                              ),
-                              SizedBox(
-                                width: width * 0.02,
-                              ),
-                              Container(
-                                child: InkWell(
-                                  child: Container(
-                                    height: 50,
-                                    width: 45,
-                                    decoration: BoxDecoration(
-                                      color: colorVeryLightGray,
-                                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey.withOpacity(0.5), // Replace with your desired shadow color
-                                          spreadRadius: 1, // Replace with your desired spread radius
-                                          blurRadius: 5, // Replace with your desired blur radius
-                                          offset: Offset(0, 3), // Replace with your desired offset
-                                        ),
-                                      ],
-                                    ),
-                                    child: Icon(
-                                      Icons.favorite_border,
-                                      color: Color(0xFFFF9832),
                     return Container(
                       child: Column(
                         children: [
@@ -296,24 +244,13 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                ),
-                              )
-                            ],
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 5,),
-                        Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          Container(
+                            child: Column(
                               children: [
-                                Text(
-                                  placeList[index].name,
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                                ),
-                                SizedBox(width: width*0.25,),
-                                Row(
-                                  children: [Text(placeList[index].rate), Icon(Icons.star, color: Color(0xFFFF9832))],
                                 Container(
                                   child: Row(
                                     mainAxisAlignment:
@@ -336,25 +273,27 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                 )
                               ],
-                            )
-                          ],
-                        )
-                      ],
+                            ),
+                          )
+                        ],
+                      ),
                     );
                   },
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: width*0.05),
+                margin: EdgeInsets.symmetric(horizontal: width * 0.05),
                 padding: EdgeInsets.all(15),
                 width: width,
-                height: height*0.15,
+                height: height * 0.15,
                 decoration: BoxDecoration(
-                  color: colorVeryLightGray,
-                  borderRadius: BorderRadius.all(Radius.circular(20))
-                ),
+                    color: colorVeryLightGray,
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
                 alignment: Alignment.center,
-                child: Text("اطلب فوق 200 ريال\n ولك توصيل مجاني",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),),
+                child: Text(
+                  "اطلب فوق 200 ريال\n ولك توصيل مجاني",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                ),
               )
             ],
           ),
