@@ -1,6 +1,3 @@
-
-
-
 import 'package:deliver_app/Model/category-model.dart';
 
 List<Category> categoriesList = [

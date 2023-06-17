@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import './ScreenPages/more.dart';
 import './ScreenPages/store.dart';
+import 'ScreenPages/cart.dart';
 // import './ScreenPages/ProfilePage.dart';
 // import './ScreenPages/cart.dart';
 // import './ScreenPages/Favorite.dart';
@@ -74,9 +75,9 @@ class _TabsScreenState extends State<TabsScreen> {
     // const Favorite(),
     null,
     const store(),
+    const cart(),
     null,
-    null,
-    // const cart(),
+
     // const Notificationpage(),
   ];
   // final icons = [
@@ -127,9 +128,7 @@ class _TabsScreenState extends State<TabsScreen> {
                   Icon(
                     Icons.store_mall_directory_outlined,
                   ),
-                  IconButton(
-                      icon: Icon(Icons.add_shopping_cart_sharp),
-                      onPressed: snacl),
+                  Icon(Icons.add_shopping_cart_sharp),
                   IconButton(
                     icon: Icon(Icons.notifications_active_outlined),
                     onPressed: snacl,

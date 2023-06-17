@@ -5,10 +5,8 @@ class Notificationpage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          body: const Center(child: Text('ff'))),
-    );
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: const Center(child: Text('ff')));
   }
 }

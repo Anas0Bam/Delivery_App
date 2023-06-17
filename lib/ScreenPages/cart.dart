@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
 
-// ignore: camel_case_types
+import '../DataTest/orderLists.dart';
+import '../widgets/OrdersDisplayer.dart';
+
 class cart extends StatelessWidget {
   const cart({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: const Center(
-          child: Text('cart'),
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-      ),
+    return Scaffold(
+      appBar: AppBar(
+          elevation: 3,
+          title: Text(
+            'طلباتك',
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white,
+          centerTitle: true),
+      body: ListView.builder(
+          itemCount: Orderlist.length,
+          itemBuilder: (context, index) => DisplayOrders(
+              Orderlist[index].image,
+              Orderlist[index].namestore,
+              Orderlist[index].textChanger,
+              Orderlist[index].amount,
+              context)),
+      backgroundColor: Theme.of(context).colorScheme.background,
     );
   }
 }
