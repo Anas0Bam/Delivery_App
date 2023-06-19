@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../DataTest/orderLists.dart';
@@ -19,12 +20,13 @@ class cart extends StatelessWidget {
           centerTitle: true),
       body: ListView.builder(
           itemCount: Orderlist.length,
-          itemBuilder: (context, index) => DisplayOrders(
+          itemBuilder: (context, index) => CardDisplayer(
               Orderlist[index].image,
               Orderlist[index].namestore,
               Orderlist[index].textChanger,
               Orderlist[index].amount,
-              context)),
+              Orderlist[index].orders,
+              Orderlist[index].displaytime)),
       backgroundColor: Theme.of(context).colorScheme.background,
     );
   }

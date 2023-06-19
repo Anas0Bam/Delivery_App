@@ -73,35 +73,30 @@ class _TabsScreenState extends State<TabsScreen> {
   var lii = [
     const more(),
     // const Favorite(),
-    null,
+
     const store(),
     const cart(),
-    null,
 
     // const Notificationpage(),
   ];
-  // final icons = [
-  //   const Icon(Icons.more_horiz),
-  //   const Icon(Icons.favorite_border),
-  //   const Icon(Icons.store_mall_directory_outlined),
-  //   const Icon(Icons.add_shopping_cart_sharp),
-  //   const Icon(Icons.notifications_active_outlined)
-  // ];
-  int d = 2;
-  void snacl() {
-    final tex = 'This page is under mIantance';
-    final snac = SnackBar(
-      duration: Duration(seconds: 1),
-      content: Text(tex),
-      backgroundColor: Colors.red,
-    );
-    ScaffoldMessenger.of(
-      context,
-    ).removeCurrentSnackBar();
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(snac);
-  }
+
+  int d = 1;
+
+  //SnackBarError Displayer
+  // void snacl() {
+  //   final tex = 'This page is under mIantance';
+  //   final snac = SnackBar(
+  //     duration: Duration(seconds: 1),
+  //     content: Text(tex),
+  //     backgroundColor: Colors.red,
+  //   );
+  //   ScaffoldMessenger.of(
+  //     context,
+  //   ).removeCurrentSnackBar();
+  //   ScaffoldMessenger.of(
+  //     context,
+  //   ).showSnackBar(snac);
+  // }
 
   Widget build(BuildContext context) => isEmailVerified
       ? MaterialApp(
@@ -123,16 +118,16 @@ class _TabsScreenState extends State<TabsScreen> {
                 onTap: (ss) => setState(() => d = ss),
                 items: [
                   const Icon(Icons.more_horiz),
-                  IconButton(
-                      icon: Icon(Icons.favorite_border), onPressed: snacl),
+                  // IconButton(
+                  //     icon: Icon(Icons.favorite_border), onPressed: snacl),
                   Icon(
                     Icons.store_mall_directory_outlined,
                   ),
                   Icon(Icons.add_shopping_cart_sharp),
-                  IconButton(
-                    icon: Icon(Icons.notifications_active_outlined),
-                    onPressed: snacl,
-                  )
+                  // IconButton(
+                  //   icon: Icon(Icons.notifications_active_outlined),
+                  //   onPressed: snacl,
+                  // )
                 ]),
           ),
         )

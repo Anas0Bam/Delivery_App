@@ -1,7 +1,12 @@
 import 'package:deliver_app/DataTest/categoriesList.dart';
 import 'package:deliver_app/DataTest/placesList.dart';
+import 'package:deliver_app/Model/Orders-Module.dart';
+
 import 'package:deliver_app/constans.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../DataTest/orderLists.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,6 +15,8 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    var Time = DateFormat.yMMMd().format(DateTime.now());
+    String? ordres;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: FloatingActionButton(
@@ -177,75 +184,197 @@ class HomeScreen extends StatelessWidget {
                     return Container(
                       child: Column(
                         children: [
-                          Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                              color: colorLightGray,
-                              border: Border.all(color: colorDarkGray),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(
-                                      0.3), // Replace with your desired shadow color
-                                  blurRadius:
-                                      5, // Replace with your desired blur radius
-                                  spreadRadius:
-                                      0, // Set to 0 to restrict shadow to the bottom
-                                  offset: Offset(0,
-                                      8), // Adjust the offset for desired shadow position
-                                ),
-                              ],
-                            ),
-                            margin:
-                                EdgeInsets.only(left: width * 0.05, right: 2),
-                            padding: EdgeInsets.symmetric(
-                                vertical: height * 0.005,
-                                horizontal: width * 0.05),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("open",
-                                    style: TextStyle(
-                                        color: Color(0xFF49EE20),
-                                        fontSize: 18)),
-                                Image.asset(
-                                  placeList[index].image,
-                                  height: height * 0.2,
-                                ),
-                                SizedBox(
-                                  width: width * 0.02,
-                                ),
-                                Container(
-                                  child: InkWell(
-                                    child: Container(
-                                      height: 50,
-                                      width: 45,
-                                      decoration: BoxDecoration(
-                                        color: colorVeryLightGray,
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10)),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(
-                                                0.5), // Replace with your desired shadow color
-                                            spreadRadius:
-                                                1, // Replace with your desired spread radius
-                                            blurRadius:
-                                                5, // Replace with your desired blur radius
-                                            offset: Offset(0,
-                                                3), // Replace with your desired offset
+                          InkWell(
+                            onTap: () => showModalBottomSheet(
+                                isScrollControlled: true,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20))),
+                                backgroundColor: ThemeData().backgroundColor,
+                                context: context,
+                                isDismissible: false,
+                                enableDrag: true,
+                                builder: (builder) {
+                                  return Container(
+                                    height: height * 0.50,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            placeList[index].name,
+                                            style: TextStyle(
+                                                fontSize: width * 0.07,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                        ],
-                                      ),
-                                      child: Icon(
-                                        Icons.favorite_border,
-                                        color: Color(0xFFFF9832),
-                                      ),
-                                    ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 9, right: 9),
+                                            child: TextFormField(
+                                                onChanged: (value) =>
+                                                    ordres = value,
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                                minLines: 5,
+                                                maxLines: 10,
+                                                decoration: InputDecoration(
+                                                  suffixIcon: Icon(Icons
+                                                      .local_grocery_store_sharp),
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .black)),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.black),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  label:
+                                                      Text('Insert your order'),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
+                                                )),
+                                          ),
+                                          Text(
+                                            'رسوم التوصيل 5 ريال',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              MaterialButton(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                                  color: Colors.red,
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                  child: Text('Cancel',
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              width * 0.04,
+                                                          fontWeight: FontWeight
+                                                              .bold))),
+                                              MaterialButton(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))),
+                                                color: Colors.blueAccent,
+                                                onPressed: () {
+                                                  Orderlist.add(Orders(
+                                                      placeList[index].image,
+                                                      placeList[index].name,
+                                                      false,
+                                                      5,
+                                                      ordres!,
+                                                      Time));
+
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  'Send',
+                                                  style: TextStyle(
+                                                      fontSize: width * 0.04,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ]),
+                                  );
+                                }),
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                color: colorLightGray,
+                                border: Border.all(color: colorDarkGray),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(
+                                        0.3), // Replace with your desired shadow color
+                                    blurRadius:
+                                        5, // Replace with your desired blur radius
+                                    spreadRadius:
+                                        0, // Set to 0 to restrict shadow to the bottom
+                                    offset: Offset(0,
+                                        8), // Adjust the offset for desired shadow position
                                   ),
-                                )
-                              ],
+                                ],
+                              ),
+                              margin:
+                                  EdgeInsets.only(left: width * 0.05, right: 2),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: height * 0.005,
+                                  horizontal: width * 0.03),
+                              //I have change thw width to 0.03
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("open",
+                                      style: TextStyle(
+                                          color: Color(0xFF49EE20),
+                                          fontSize: 18)),
+                                  Image.asset(
+                                    placeList[index].image,
+                                    height: height * 0.2,
+                                  ),
+                                  SizedBox(
+                                    width: width * 0.02,
+                                  ),
+                                  // Container(
+                                  //   child: InkWell(
+                                  //     child: Container(
+                                  //       height: 50,
+                                  //       width: 45,
+                                  //       decoration: BoxDecoration(
+                                  //         color: colorVeryLightGray,
+                                  //         borderRadius: BorderRadius.all(
+                                  //             Radius.circular(10)),
+                                  //         boxShadow: [
+                                  //           BoxShadow(
+                                  //             color: Colors.grey.withOpacity(
+                                  //                 0.5), // Replace with your desired shadow color
+                                  //             spreadRadius:
+                                  //                 1, // Replace with your desired spread radius
+                                  //             blurRadius:
+                                  //                 5, // Replace with your desired blur radius
+                                  //             offset: Offset(0,
+                                  //                 3), // Replace with your desired offset
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //       child: Icon(
+                                  //         Icons.favorite_border,
+                                  //         color: Color(0xFFFF9832),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // )
+                                ],
+                              ),
                             ),
                           ),
                           Container(

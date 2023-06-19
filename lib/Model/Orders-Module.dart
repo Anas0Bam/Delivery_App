@@ -3,8 +3,11 @@ class Orders {
   String _nameStore;
   bool _textChanger;
   int _textamount;
+  String _orders;
+  String _displaytime;
 
-  Orders(this._image, this._nameStore, this._textChanger, this._textamount);
+  Orders(this._image, this._nameStore, this._textChanger, this._textamount,
+      this._orders, this._displaytime);
 
   String get image => _image;
 
@@ -28,5 +31,17 @@ class Orders {
 
   set amount(int value) {
     _textamount = value;
+  }
+
+  String get orders => _orders;
+
+  set orders(String value) {
+    _orders = value;
+  }
+
+  String get displaytime => _displaytime;
+
+  set displaytime(String value) {
+    _displaytime = value;
   }
 }
