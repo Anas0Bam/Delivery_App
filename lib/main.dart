@@ -1,19 +1,25 @@
 import 'package:colours/colours.dart';
 import 'package:deliver_app/Login_screen/auth_page.dart';
-import 'package:deliver_app/ScreenPages/more.dart';
+
+import 'package:deliver_app/intro_screens/onboardingscreen.dart';
 import 'package:deliver_app/l10n/l10n.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// import 'package:deliver_app/TabsScreen.dart';
-// import 'package:deliver_app/intro_screens/mainintroscreens.dart';
 
 import 'package:flutter/material.dart';
 
-void main() async {
+int? initScreen;
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  initScreen = await prefs.getInt('initScreen');
+  await prefs.setInt('initScreen', 1);
+
+  // final showHome = prefs.getBool('showHome') ?? false;
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -50,16 +56,13 @@ class HomePage extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      localeResolutionCallback: (currentLang, supportLan) {
-        if (currentLang != null) {
-          for (Locale local in supportLan) {
-            if (local.languageCode == currentLang.languageCode) {
-              return currentLang;
-            }
-          }
-        }
+
+      initialRoute: initScreen == 0 || initScreen == null ? 'onboard' : 'home',
+      routes: {
+        'home': (context) => AuthPage(),
+        'onboard': (context) => Onboardingscreen(),
       },
-      home: AuthPage(),
+      // home: showHome ? AuthPage() : Onboardingscreen(),
       // routes: {
       //   '/': (_) => AuthPage(),
       // },

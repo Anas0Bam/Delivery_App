@@ -16,7 +16,6 @@ class ProfilePage extends StatelessWidget {
 
     final currentUser1 = FirebaseAuth.instance.currentUser;
     final usercollec = FirebaseFirestore.instance.collection('Users');
-    bool dis = false;
     Future<void>? editfield(
         String field,
         TextInputFormatter df,

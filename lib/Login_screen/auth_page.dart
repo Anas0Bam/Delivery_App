@@ -1,9 +1,6 @@
 // import 'package:deliver_app/Login_screen/LoginOrRegister.dart';
 import 'package:deliver_app/Login_screen/LoginOrRegister.dart';
-import 'package:deliver_app/Login_screen/LoginPage.dart';
 import 'package:deliver_app/TabsScreen.dart';
-import 'package:deliver_app/intro_screens/onboardingscreen.dart';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

@@ -1,6 +1,4 @@
-import 'package:deliver_app/Login_screen/LoginOrRegister.dart';
-// import 'package:deliver_app/Login_screen/auth_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:deliver_app/Login_screen/auth_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'intropage1.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +13,18 @@ class Onboardingscreen extends StatefulWidget {
 
 class _OnboardingscreenState extends State<Onboardingscreen> {
   final _controller = PageController();
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  bool showLoginPage = true;
+  void togglePages() {
+    setState(() {
+      showLoginPage = !showLoginPage;
+    });
   }
 
   bool onLastPage = false;
@@ -57,12 +63,10 @@ class _OnboardingscreenState extends State<Onboardingscreen> {
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                        onTap: () async {
-                          final prefs = await SharedPreferences.getInstance();
-                          prefs.setBool('showHome', true);
+                        onTap: () {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return const LoginOrRegister();
+                            return AuthPage();
                           }));
                         })
                     : IconButton(

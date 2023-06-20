@@ -26,7 +26,6 @@ class more extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var widthg = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
