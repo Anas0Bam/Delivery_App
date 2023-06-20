@@ -71,6 +71,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return MaterialApp(
       home: Scaffold(
           backgroundColor: Theme.of(context).colorScheme.background,
@@ -82,7 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Image.asset(
                     'assets/12.png',
-                    height: 250,
+                    height: height * 0.250,
                   ),
                   Text(AppLocalizations.of(context)!.welcomeTitle),
                   SizedBox(height: 15),
@@ -106,10 +107,10 @@ class _LoginPageState extends State<LoginPage> {
                       textController: passwordcontroller,
                       obscureText: true),
                   SizedBox(
-                    height: 15,
+                    height: height * 0.015,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                    padding: EdgeInsets.symmetric(horizontal: height * 0.025),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -137,11 +138,11 @@ class _LoginPageState extends State<LoginPage> {
                     TextLable: AppLocalizations.of(context)!.login,
                     onTap: signUserIn,
                   ),
-                  const SizedBox(
-                    height: 40,
+                  SizedBox(
+                    height: height * 0.040,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    padding: EdgeInsets.symmetric(horizontal: height * 0.025),
                     child: Row(
                       children: [
                         Expanded(
@@ -151,7 +152,8 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: height * 0.010),
                           child: Text(
                               AppLocalizations.of(context)!.ortextFirstPag),
                         ),
@@ -163,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: height * 0.050,
                   ),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
@@ -175,8 +177,8 @@ class _LoginPageState extends State<LoginPage> {
                   //     SquareTile(imagePath: 'assets/apple.png'),
                   //   ],
                   // ),
-                  const SizedBox(
-                    height: 50,
+                  SizedBox(
+                    height: height * 0.050,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -184,9 +186,6 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         AppLocalizations.of(context)!.notAmember,
                         style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        width: 4,
                       ),
                       InkWell(
                         splashColor: Colors.white54,
@@ -199,6 +198,9 @@ class _LoginPageState extends State<LoginPage> {
                               decoration: TextDecoration.underline),
                         ),
                       ),
+                      SizedBox(
+                        height: height * 0.010,
+                      )
                     ],
                   ),
                 ],

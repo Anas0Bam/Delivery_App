@@ -132,6 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
     return MaterialApp(
       home: Scaffold(
           backgroundColor: Theme.of(context).colorScheme.background,
@@ -143,13 +144,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   Image.asset(
                     'assets/12.png',
-                    height: 150,
+                    height: height * 0.26,
                   ),
                   Text(
                     AppLocalizations.of(context)!.lets,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: height * 0.015),
                   MyTextfield(
                       pre: '',
                       df: FilteringTextInputFormatter.deny(''),
@@ -170,7 +171,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       textController: _lastName,
                       obscureText: false),
                   SizedBox(
-                    height: 15,
+                    height: height * 0.015,
                   ),
                   MyTextfield(
                       pre: '',
@@ -181,7 +182,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       textController: _emailcontroller,
                       obscureText: false),
                   SizedBox(
-                    height: 15,
+                    height: height * 0.015,
                   ),
                   MyTextfield(
                       pre: '',
@@ -192,7 +193,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       textController: _passwordcontroller,
                       obscureText: true),
                   SizedBox(
-                    height: 15,
+                    height: height * 0.015,
                   ),
                   MyTextfield(
                       pre: '',
@@ -203,7 +204,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       textController: _confirmPasswordTextController,
                       obscureText: true),
                   SizedBox(
-                    height: 15,
+                    height: height * 0.015,
                   ),
                   MyTextfield(
                       pre: '+966',
@@ -214,7 +215,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       textController: _Phonenumber,
                       obscureText: false),
                   SizedBox(
-                    height: 15,
+                    height: height * 0.015,
                   ),
                   MyTextfield(
                       pre: '',
@@ -225,20 +226,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       textController: _Address,
                       obscureText: false),
                   SizedBox(
-                    height: 15,
+                    height: height * 0.015,
                   ),
-                  const SizedBox(
-                    height: 20,
+                  SizedBox(
+                    height: height * 0.020,
                   ),
                   MyButton(
                     TextLable: AppLocalizations.of(context)!.register,
                     onTap: signUp,
                   ),
-                  const SizedBox(
-                    height: 30,
+                  SizedBox(
+                    height: height * 0.030,
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                    padding: EdgeInsets.symmetric(horizontal: height * 0.025),
                     child: Row(
                       children: [
                         Expanded(
@@ -248,7 +249,8 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10.0),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: height * 0.010),
                           child: Text(
                               AppLocalizations.of(context)!.ortextFirstPag),
                         ),
@@ -260,7 +262,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: height * 0.030,
                   ),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.center,
@@ -276,14 +278,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   //   height: 20,
                   // ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 30),
+                    padding: EdgeInsets.only(bottom: height * 0.030),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(AppLocalizations.of(context)!.already),
-                        SizedBox(
-                          width: 4,
-                        ),
                         InkWell(
                           splashColor: Colors.white54,
                           onTap: widget.ontap,
@@ -295,6 +294,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                 decoration: TextDecoration.underline),
                           ),
                         ),
+                        SizedBox(
+                          height: height * 0.015,
+                        )
                       ],
                     ),
                   ),
