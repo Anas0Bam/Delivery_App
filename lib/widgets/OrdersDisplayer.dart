@@ -1,7 +1,6 @@
-import 'package:deliver_app/DataTest/orderLists.dart';
 import 'package:deliver_app/widgets/Invoice.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class CardDisplayer extends StatelessWidget {
@@ -52,12 +51,12 @@ class CardDisplayer extends StatelessWidget {
                 ),
                 _textchanger
                     ? Text(
-                        "Completed",
+                        AppLocalizations.of(context)!.completed,
                         style: TextStyle(
                             color: Colors.green, fontWeight: FontWeight.bold),
                       )
                     : Text(
-                        "Pending",
+                        AppLocalizations.of(context)!.pending,
                         style: TextStyle(
                             color: Colors.grey, fontWeight: FontWeight.bold),
                       ),
@@ -73,7 +72,7 @@ class CardDisplayer extends StatelessWidget {
               children: [
                 SizedBox(height: height * 00.02),
                 Text(
-                  "${_amount} " + "ريال ",
+                  "${_amount} " + AppLocalizations.of(context)!.money,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 TextButton(
@@ -87,7 +86,7 @@ class CardDisplayer extends StatelessWidget {
                         return Invoice(
                             _image, _storename, _orders, _timedisplayer);
                       }),
-                  child: Text("Details order",
+                  child: Text(AppLocalizations.of(context)!.deitals,
                       style: TextStyle(decoration: TextDecoration.underline)),
                 )
               ],

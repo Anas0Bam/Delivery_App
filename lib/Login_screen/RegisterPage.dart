@@ -5,10 +5,9 @@ import 'package:deliver_app/widgets/MyButton.dart';
 import 'package:deliver_app/widgets/Textfileddetials.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // import '../Compoentes/square_tile.dart';
 import 'package:flutter/material.dart';
-
 
 class RegisterPage extends StatefulWidget {
   final Function()? ontap;
@@ -147,7 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 150,
                   ),
                   Text(
-                    'Let\'s create an account for you',
+                    AppLocalizations.of(context)!.lets,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   SizedBox(height: 15),
@@ -155,7 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       pre: '',
                       df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.name,
-                      hintText: 'First name',
+                      hintText: AppLocalizations.of(context)!.firstNa,
                       //   selectIcon: null,
                       textController: _FirstName,
                       obscureText: false),
@@ -166,7 +165,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       pre: '',
                       df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.name,
-                      hintText: 'Last name',
+                      hintText: AppLocalizations.of(context)!.lastNa,
                       //   selectIcon: null,
                       textController: _lastName,
                       obscureText: false),
@@ -177,7 +176,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       pre: '',
                       df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.emailAddress,
-                      hintText: 'email',
+                      hintText: AppLocalizations.of(context)!.email,
                       //   selectIcon: null,
                       textController: _emailcontroller,
                       obscureText: false),
@@ -189,7 +188,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.visiblePassword,
                       //   selectIcon: Icon(Icons.password_outlined),
-                      hintText: 'password',
+                      hintText: AppLocalizations.of(context)!.password,
                       textController: _passwordcontroller,
                       obscureText: true),
                   SizedBox(
@@ -200,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.visiblePassword,
                       //   selectIcon: Icon(Icons.password_outlined),
-                      hintText: 'Confirm Password',
+                      hintText: AppLocalizations.of(context)!.passwordconf,
                       textController: _confirmPasswordTextController,
                       obscureText: true),
                   SizedBox(
@@ -210,7 +209,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       pre: '+966',
                       df: FilteringTextInputFormatter.digitsOnly,
                       inputTypedis: TextInputType.number,
-                      hintText: 'Phone number',
+                      hintText: AppLocalizations.of(context)!.phonenum,
                       //   selectIcon: null,
                       textController: _Phonenumber,
                       obscureText: false),
@@ -221,7 +220,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       pre: '',
                       df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.streetAddress,
-                      hintText: 'Address',
+                      hintText: AppLocalizations.of(context)!.adress,
                       //   selectIcon: null,
                       textController: _Address,
                       obscureText: false),
@@ -232,7 +231,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   MyButton(
-                    TextLable: 'Sign up ',
+                    TextLable: AppLocalizations.of(context)!.register,
                     onTap: signUp,
                   ),
                   const SizedBox(
@@ -248,9 +247,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             color: Colors.grey.shade500,
                           ),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text('Or Continue with'),
+                          child: Text(
+                              AppLocalizations.of(context)!.ortextFirstPag),
                         ),
                         Expanded(
                           child: Divider(
@@ -277,10 +277,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   // ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 30),
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('Already have an account?'),
+                        Text(AppLocalizations.of(context)!.already),
                         SizedBox(
                           width: 4,
                         ),
@@ -288,7 +288,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           splashColor: Colors.white54,
                           onTap: widget.ontap,
                           child: Text(
-                            'Login now',
+                            AppLocalizations.of(context)!.login,
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,

@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliver_app/DataTest/categoriesList.dart';
 import 'package:deliver_app/DataTest/placesList.dart';
 import 'package:deliver_app/Model/Orders-Module.dart';
 
 import 'package:deliver_app/constans.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../DataTest/orderLists.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -16,7 +18,8 @@ class HomeScreen extends StatelessWidget {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     var Time = DateFormat.yMMMd().format(DateTime.now());
-    String? ordres;
+    String? orders;
+    bool orderstatus = false;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       floatingActionButton: FloatingActionButton(
@@ -56,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                               width: width * 0.02,
                             ),
                             Text(
-                              "الموقع",
+                              AppLocalizations.of(context)!.location,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             )
@@ -108,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                 padding:
                     EdgeInsets.only(left: width * 0.05, right: width * 0.05),
                 child: Text(
-                  "Categories",
+                  AppLocalizations.of(context)!.categories,
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -158,14 +161,14 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "رؤية المزيد",
+                      AppLocalizations.of(context)!.more,
                       style: TextStyle(
                           color: colorSteelGray,
                           fontWeight: FontWeight.bold,
                           fontSize: 16),
                     ),
                     Text(
-                      "البقالات القريبة منك",
+                      AppLocalizations.of(context)!.near,
                       style:
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     )
@@ -196,6 +199,9 @@ class HomeScreen extends StatelessWidget {
                                 isDismissible: false,
                                 enableDrag: true,
                                 builder: (builder) {
+                                  var user =
+                                      FirebaseAuth.instance.currentUser!.uid;
+
                                   return Container(
                                     height: height * 0.50,
                                     child: Column(
@@ -213,7 +219,7 @@ class HomeScreen extends StatelessWidget {
                                                 left: 9, right: 9),
                                             child: TextFormField(
                                                 onChanged: (value) =>
-                                                    ordres = value,
+                                                    orders = value,
                                                 keyboardType:
                                                     TextInputType.multiline,
                                                 minLines: 5,
@@ -240,8 +246,10 @@ class HomeScreen extends StatelessWidget {
                                                         BorderRadius.circular(
                                                             20),
                                                   ),
-                                                  label:
-                                                      Text('Insert your order'),
+                                                  label: Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .deitals),
                                                   labelStyle: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -249,7 +257,7 @@ class HomeScreen extends StatelessWidget {
                                                 )),
                                           ),
                                           Text(
-                                            'رسوم التوصيل 5 ريال',
+                                            AppLocalizations.of(context)!.fees,
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20),
@@ -267,7 +275,10 @@ class HomeScreen extends StatelessWidget {
                                                   color: Colors.red,
                                                   onPressed: () =>
                                                       Navigator.pop(context),
-                                                  child: Text('Cancel',
+                                                  child: Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .cancel,
                                                       style: TextStyle(
                                                           fontSize:
                                                               width * 0.04,
@@ -284,15 +295,28 @@ class HomeScreen extends StatelessWidget {
                                                   Orderlist.add(Orders(
                                                       placeList[index].image,
                                                       placeList[index].name,
-                                                      false,
+                                                      orderstatus,
                                                       5,
-                                                      ordres!,
+                                                      orders!,
                                                       Time));
-
+                                                  FirebaseFirestore.instance
+                                                      .collection("Users")
+                                                      .doc("$user/orders")
+                                                      .set({
+                                                    "Place Name":
+                                                        placeList[index]
+                                                            .name
+                                                            .trim(),
+                                                    "Order Number": 'nume11',
+                                                    "Order Date": Time,
+                                                    "Order Status": orderstatus,
+                                                    "Order Detials": orders
+                                                  });
                                                   Navigator.pop(context);
                                                 },
                                                 child: Text(
-                                                  'Send',
+                                                  AppLocalizations.of(context)!
+                                                      .send,
                                                   style: TextStyle(
                                                       fontSize: width * 0.04,
                                                       fontWeight:
@@ -333,7 +357,7 @@ class HomeScreen extends StatelessWidget {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("open",
+                                  Text(AppLocalizations.of(context)!.opentext,
                                       style: TextStyle(
                                           color: Color(0xFF49EE20),
                                           fontSize: 18)),
@@ -420,7 +444,7 @@ class HomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(20))),
                 alignment: Alignment.center,
                 child: Text(
-                  "اطلب فوق 200 ريال\n ولك توصيل مجاني",
+                  AppLocalizations.of(context)!.offer,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
                 ),
               )

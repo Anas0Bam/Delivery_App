@@ -99,37 +99,35 @@ class _TabsScreenState extends State<TabsScreen> {
   // }
 
   Widget build(BuildContext context) => isEmailVerified
-      ? MaterialApp(
-          home: Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.background,
-            body: lii[d],
-            // body: Center(
-            //   child: Text(
-            //     jjj[d]['k'] as String,
-            //   ),
-            // ),
-            bottomNavigationBar: CurvedNavigationBar(
-                buttonBackgroundColor: Theme.of(context).primaryColor,
-                animationDuration: const Duration(milliseconds: 300),
-                animationCurve: Curves.easeInOut,
-                height: 60,
-                backgroundColor: Theme.of(context).colorScheme.background,
-                index: d,
-                onTap: (ss) => setState(() => d = ss),
-                items: [
-                  const Icon(Icons.more_horiz),
-                  // IconButton(
-                  //     icon: Icon(Icons.favorite_border), onPressed: snacl),
-                  Icon(
-                    Icons.store_mall_directory_outlined,
-                  ),
-                  Icon(Icons.add_shopping_cart_sharp),
-                  // IconButton(
-                  //   icon: Icon(Icons.notifications_active_outlined),
-                  //   onPressed: snacl,
-                  // )
-                ]),
-          ),
+      ? Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: lii[d],
+          // body: Center(
+          //   child: Text(
+          //     jjj[d]['k'] as String,
+          //   ),
+          // ),
+          bottomNavigationBar: CurvedNavigationBar(
+              buttonBackgroundColor: Theme.of(context).primaryColor,
+              animationDuration: const Duration(milliseconds: 300),
+              animationCurve: Curves.easeInOut,
+              height: 60,
+              backgroundColor: Theme.of(context).colorScheme.background,
+              index: d,
+              onTap: (ss) => setState(() => d = ss),
+              items: [
+                const Icon(Icons.more_horiz),
+                // IconButton(
+                //     icon: Icon(Icons.favorite_border), onPressed: snacl),
+                Icon(
+                  Icons.store_mall_directory_outlined,
+                ),
+                Icon(Icons.add_shopping_cart_sharp),
+                // IconButton(
+                //   icon: Icon(Icons.notifications_active_outlined),
+                //   onPressed: snacl,
+                // )
+              ]),
         )
       : VerifyEmailPageState();
 }

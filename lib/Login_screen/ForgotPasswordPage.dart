@@ -3,7 +3,7 @@ import 'package:deliver_app/widgets/Textfileddetials.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -65,7 +65,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               'assets/12.png',
               height: 250,
             ),
-            const Text('Enter your Email'),
+            Text(AppLocalizations.of(context)!.enter),
             const SizedBox(
               height: 20,
             ),
@@ -74,14 +74,14 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 df: FilteringTextInputFormatter.deny(''),
                 inputTypedis: TextInputType.emailAddress,
                 //   selectIcon: Icon(Icons.password_outlined),
-                hintText: 'email',
+                hintText: AppLocalizations.of(context)!.email,
                 textController: emailcontroller,
                 obscureText: false),
             const SizedBox(
               height: 20,
             ),
             MyButton(
-              TextLable: 'Reset your password',
+              TextLable: AppLocalizations.of(context)!.reset,
               onTap: passwordreset,
             ),
           ],

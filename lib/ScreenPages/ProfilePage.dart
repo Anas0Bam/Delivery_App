@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -27,48 +28,48 @@ class ProfilePage extends StatelessWidget {
       String newvalue = '';
       String phow = '';
       await showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text('Edit new ' + field),
-                content: TextField(
-                  inputFormatters: <TextInputFormatter>[df],
-                  onChanged: (value) {
-                    newvalue = value;
-                  },
-                  keyboardType: _inputTypedis,
-                  showCursor: true,
-                  controller: _textController,
-                  obscureText: _obscureText,
-                  decoration: InputDecoration(
-                      prefixText: pref,
-                      prefixStyle: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                      label: Text(
-                        _hintText,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-
-                      //  icon: selectIcon,
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      fillColor: Colors.grey.shade200,
-                      filled: true,
-                      hintStyle: TextStyle(color: Colors.grey..shade900)),
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(field),
+          content: TextField(
+            inputFormatters: <TextInputFormatter>[df],
+            onChanged: (value) {
+              newvalue = value;
+            },
+            keyboardType: _inputTypedis,
+            showCursor: true,
+            controller: _textController,
+            obscureText: _obscureText,
+            decoration: InputDecoration(
+                prefixText: pref,
+                prefixStyle:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                label: Text(
+                  _hintText,
+                  style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                actions: [
-                  TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: Text('Cancel')),
-                  TextButton(
-                      onPressed: () => Navigator.of(context).pop(newvalue),
-                      child: Text('Next'))
-                ],
-              ),
-          barrierLabel: 'asddsa');
+
+                //  icon: selectIcon,
+                enabledBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+                focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                fillColor: Colors.grey.shade200,
+                filled: true,
+                hintStyle: TextStyle(color: Colors.grey..shade900)),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(AppLocalizations.of(context)!.cancel)),
+            TextButton(
+                onPressed: () => Navigator.of(context).pop(newvalue),
+                child: Text(AppLocalizations.of(context)!.edit))
+          ],
+        ),
+      );
       if (newvalue.trim().length > 0 || phow.trim().length > 0) {
         await usercollec.doc(FirebaseAuth.instance.currentUser!.uid).update({
           field: newvalue,
@@ -126,7 +127,7 @@ class ProfilePage extends StatelessWidget {
             backgroundColor: Theme.of(context).canvasColor,
             centerTitle: true,
             title: Text(
-              'Information details',
+              AppLocalizations.of(context)!.profilePgae,
               style: TextStyle(color: Colors.black),
             ),
           ),
@@ -159,7 +160,7 @@ class ProfilePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'My Details',
+                              AppLocalizations.of(context)!.mydetials,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold, fontSize: 18),
                             ),
@@ -173,11 +174,11 @@ class ProfilePage extends StatelessWidget {
                           userData['First Name'], Icon(Icons.person), false,
                           () {
                         editfield(
-                            'First Name',
+                            AppLocalizations.of(context)!.editFirstNa,
                             FilteringTextInputFormatter.deny(''),
                             TextInputType.name,
                             Firna,
-                            'First name',
+                            AppLocalizations.of(context)!.editFirstNa,
                             false,
                             '');
                       }),
@@ -191,11 +192,11 @@ class ProfilePage extends StatelessWidget {
                           ),
                           false, () {
                         editfield(
-                            'Last Name',
+                            AppLocalizations.of(context)!.editLastNa,
                             FilteringTextInputFormatter.deny(''),
                             TextInputType.name,
                             lastn,
-                            'Last name',
+                            AppLocalizations.of(context)!.editLastNa,
                             false,
                             '');
                       }),
@@ -206,11 +207,11 @@ class ProfilePage extends StatelessWidget {
                           userData['Phone Number'], Icon(Icons.phone), false,
                           () {
                         editfield(
-                            'Phone Number',
+                            AppLocalizations.of(context)!.editPho,
                             FilteringTextInputFormatter.digitsOnly,
                             TextInputType.phone,
                             pho,
-                            'Enter your new number',
+                            AppLocalizations.of(context)!.editPho,
                             false,
                             '+966');
                       }),
@@ -220,11 +221,11 @@ class ProfilePage extends StatelessWidget {
                       textfiledediti(currentUser1.email.toString(),
                           Icon(Icons.email), false, () {
                         editfield(
-                            'Email',
+                            AppLocalizations.of(context)!.editEmial,
                             FilteringTextInputFormatter.deny(''),
                             TextInputType.emailAddress,
                             email,
-                            'Enter your new email',
+                            AppLocalizations.of(context)!.editEmial,
                             false,
                             '');
                       }),
@@ -235,11 +236,11 @@ class ProfilePage extends StatelessWidget {
                           userData['Address'], Icon(Icons.home_outlined), false,
                           () {
                         editfield(
-                            'Address',
+                            AppLocalizations.of(context)!.adressnew,
                             FilteringTextInputFormatter.deny(''),
                             TextInputType.streetAddress,
                             add,
-                            'Your new address',
+                            AppLocalizations.of(context)!.editadd,
                             false,
                             '');
                       }),

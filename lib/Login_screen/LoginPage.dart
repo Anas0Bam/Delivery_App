@@ -3,6 +3,7 @@
 import 'package:deliver_app/widgets/MyButton.dart';
 import 'package:deliver_app/widgets/Textfileddetials.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -83,13 +84,13 @@ class _LoginPageState extends State<LoginPage> {
                     'assets/12.png',
                     height: 250,
                   ),
-                  Text('Welcome to Manadib'),
+                  Text(AppLocalizations.of(context)!.welcomeTitle),
                   SizedBox(height: 15),
                   MyTextfield(
-                      pre: '',
+                      pre: "",
                       df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.emailAddress,
-                      hintText: 'email',
+                      hintText: AppLocalizations.of(context)!.email,
                       //   selectIcon: null,
                       textController: emailcontroller,
                       obscureText: false),
@@ -101,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
                       df: FilteringTextInputFormatter.deny(''),
                       inputTypedis: TextInputType.visiblePassword,
                       //   selectIcon: Icon(Icons.password_outlined),
-                      hintText: 'password',
+                      hintText: AppLocalizations.of(context)!.password,
                       textController: passwordcontroller,
                       obscureText: true),
                   SizedBox(
@@ -118,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                             return ForgotPasswordPage();
                           })),
                           child: Text(
-                            'Forgot Password?',
+                            AppLocalizations.of(context)!.forgotPass,
                             style: TextStyle(
                                 color: Colors.blue,
                                 fontWeight: FontWeight.bold,
@@ -133,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 25,
                   ),
                   MyButton(
-                    TextLable: 'Sign in',
+                    TextLable: AppLocalizations.of(context)!.login,
                     onTap: signUserIn,
                   ),
                   const SizedBox(
@@ -149,9 +150,10 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.grey.shade500,
                           ),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10.0),
-                          child: Text('Or Continue with'),
+                          child: Text(
+                              AppLocalizations.of(context)!.ortextFirstPag),
                         ),
                         Expanded(
                           child: Divider(
@@ -176,10 +178,13 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 50,
                   ),
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Not a member?'),
+                      Text(
+                        AppLocalizations.of(context)!.notAmember,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       SizedBox(
                         width: 4,
                       ),
@@ -187,7 +192,7 @@ class _LoginPageState extends State<LoginPage> {
                         splashColor: Colors.white54,
                         onTap: widget.ontap,
                         child: Text(
-                          'Register Now',
+                          AppLocalizations.of(context)!.register,
                           style: TextStyle(
                               color: Colors.blue,
                               fontWeight: FontWeight.bold,

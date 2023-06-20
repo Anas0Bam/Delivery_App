@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Invoice extends StatelessWidget {
   final String _image;
@@ -58,7 +59,7 @@ class Invoice extends StatelessWidget {
               maxLines: 10,
               decoration: InputDecoration(
                 enabled: true,
-                labelText: 'طلبات',
+                labelText: AppLocalizations.of(context)!.deitals,
                 filled: true,
                 fillColor: Colors.white,
                 focusedBorder: OutlineInputBorder(
@@ -79,7 +80,7 @@ class Invoice extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(right: 12, top: 10),
                 child: Text(
-                  'رسوم التوصيل 5 ريال',
+                  AppLocalizations.of(context)!.fees,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),

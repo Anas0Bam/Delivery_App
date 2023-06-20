@@ -1,7 +1,7 @@
 import 'package:deliver_app/Login_screen/LoginOrRegister.dart';
 // import 'package:deliver_app/Login_screen/auth_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'intropage1.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -36,15 +36,15 @@ class _OnboardingscreenState extends State<Onboardingscreen> {
               children: [
                 Intropage1(
                     imagetitle: 'assets/12.png',
-                    titletext: 'اطلب من حولك لا تروح بعيد',
-                    subtitle: 'نوفر لك من يجيب اغراضك\n من نفس منطقتك'),
+                    titletext: AppLocalizations.of(context)!.headerOnboarding1,
+                    subtitle: AppLocalizations.of(context)!.subtelOnboarding1),
                 Intropage1(
                     imagetitle: 'assets/loc.png',
-                    titletext: 'إختار منطقتك وين ماكانت',
-                    subtitle: 'لا تشيل هم المندوب وين ماكنت'),
+                    titletext: AppLocalizations.of(context)!.headerOnboarding2,
+                    subtitle: AppLocalizations.of(context)!.subtelOnboarding2),
                 Intropage1(
                     imagetitle: 'assets/intro1.png',
-                    titletext: ' اطلب الي تبي ونجيبه لين عندك أسرع شيء',
+                    titletext: AppLocalizations.of(context)!.headerOnboarding3,
                     subtitle: ''),
               ],
             ),
@@ -52,8 +52,8 @@ class _OnboardingscreenState extends State<Onboardingscreen> {
                 alignment: const Alignment(0.75, .75),
                 child: onLastPage
                     ? InkWell(
-                        child: const Text(
-                          'Login',
+                        child: Text(
+                          AppLocalizations.of(context)!.login,
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),

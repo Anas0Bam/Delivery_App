@@ -1,5 +1,6 @@
 // import 'package:deliver_app/Login_screen/LoginOrRegister.dart';
 import 'package:deliver_app/Login_screen/LoginOrRegister.dart';
+import 'package:deliver_app/Login_screen/LoginPage.dart';
 import 'package:deliver_app/TabsScreen.dart';
 import 'package:deliver_app/intro_screens/onboardingscreen.dart';
 
@@ -19,7 +20,7 @@ class AuthPage extends StatelessWidget {
           if (snapshot.hasData) {
             return TabsScreen();
           } else {
-            return const Onboardingscreen();
+            return LoginOrRegister();
           }
         },
       ),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:deliver_app/TabsScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VerifyEmailPageState extends StatefulWidget {
   @override
@@ -80,7 +81,8 @@ class _VerifyEmailPageStateState extends State<VerifyEmailPageState> {
                   children: [
                     Text(
                       textAlign: TextAlign.center,
-                      'A verification email has been sent to this email: "${FirebaseAuth.instance.currentUser!.email}\"',
+                      AppLocalizations.of(context)!.verfi +
+                          "${FirebaseAuth.instance.currentUser!.email}",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
@@ -98,7 +100,7 @@ class _VerifyEmailPageStateState extends State<VerifyEmailPageState> {
                         size: 25,
                       ),
                       label: Text(
-                        'Resend an email',
+                        AppLocalizations.of(context)!.resend,
                         style: TextStyle(fontSize: 20),
                       ),
                       onPressed: canResendEmail ? sendVerificationEmail : null,
@@ -111,7 +113,7 @@ class _VerifyEmailPageStateState extends State<VerifyEmailPageState> {
                             backgroundColor: MaterialStateColor.resolveWith(
                                 (states) => Colors.red.shade700)),
                         onPressed: () => FirebaseAuth.instance.signOut(),
-                        child: Text('Cancel'))
+                        child: Text(AppLocalizations.of(context)!.cancel))
                   ]),
             ),
           ),

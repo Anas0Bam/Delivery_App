@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../DataTest/orderLists.dart';
 import '../widgets/OrdersDisplayer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class cart extends StatelessWidget {
   const cart({super.key});
@@ -13,7 +13,7 @@ class cart extends StatelessWidget {
       appBar: AppBar(
           elevation: 3,
           title: Text(
-            'طلباتك',
+            AppLocalizations.of(context)!.order,
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
