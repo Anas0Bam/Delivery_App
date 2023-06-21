@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliver_app/DataTest/categoriesList.dart';
 import 'package:deliver_app/DataTest/placesList.dart';
@@ -15,6 +17,8 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Set<int> setOfInts = Set();
+    setOfInts.add(Random().nextInt(999999999));
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     var Time = DateFormat.yMMMd().format(DateTime.now());
@@ -300,19 +304,21 @@ class HomeScreen extends StatelessWidget {
                                                       orders!,
                                                       Time));
                                                   FirebaseFirestore.instance
-                                                      .collection("Users")
-                                                      .doc("$user/orders")
+                                                      .collection('Users')
+                                                      .doc(
+                                                          '$user/orders/$setOfInts')
                                                       .set({
-                                                    "Place Name":
+                                                    'Place Name':
                                                         placeList[index]
                                                             .name
                                                             .trim(),
-                                                    "Order Number": 'nume11',
-                                                    "Order Date": Time,
-                                                    "Order Status": orderstatus,
-                                                    "Order Detials": orders
-                                                  });
-                                                  Navigator.pop(context);
+                                                    'Order Number': setOfInts,
+                                                    'Order Date': Time,
+                                                    'Order Status': orderstatus,
+                                                    'Order Detials': orders
+                                                  }).then((value) =>
+                                                          Navigator.pop(
+                                                              context));
                                                 },
                                                 child: Text(
                                                   AppLocalizations.of(context)!

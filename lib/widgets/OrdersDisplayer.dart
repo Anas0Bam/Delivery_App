@@ -4,15 +4,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class CardDisplayer extends StatelessWidget {
-  String _image;
+  // String _image;
 
-  int _amount;
+  // int _amount;
   String _storename;
   bool _textchanger;
   String _orders;
   String _timedisplayer;
-  CardDisplayer(this._image, this._storename, this._textchanger, this._amount,
-      this._orders, this._timedisplayer);
+  CardDisplayer(
+      this._storename, this._textchanger, this._orders, this._timedisplayer);
 
   Widget build(BuildContext context) {
     var widthg = MediaQuery.of(context).size.width;
@@ -36,7 +36,7 @@ class CardDisplayer extends StatelessWidget {
               width: widthg * 0.02,
             ),
             Image.asset(
-              _image,
+              'assets/store-place.png',
               scale: 10,
             ),
             SizedBox(
@@ -72,7 +72,7 @@ class CardDisplayer extends StatelessWidget {
               children: [
                 SizedBox(height: height * 00.02),
                 Text(
-                  "${_amount} " + AppLocalizations.of(context)!.money,
+                  "5 " + AppLocalizations.of(context)!.money,
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 TextButton(
@@ -83,8 +83,8 @@ class CardDisplayer extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       context: context,
                       builder: (context) {
-                        return Invoice(
-                            _image, _storename, _orders, _timedisplayer);
+                        return Invoice('assets/store-place.png', _storename,
+                            _orders, _timedisplayer);
                       }),
                   child: Text(AppLocalizations.of(context)!.deitals,
                       style: TextStyle(decoration: TextDecoration.underline)),
