@@ -1,8 +1,6 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliver_app/Model/globals.dart';
 import 'package:deliver_app/Model/user-model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 Future<String> getDecData({required String dcoId}) async {
   // if (await InternetOff()) {
@@ -11,10 +9,11 @@ Future<String> getDecData({required String dcoId}) async {
 
   // Firestore operations when internet connection is available
   try {
-    final ref = FirebaseFirestore.instance.collection("Users").doc(dcoId).withConverter(
-      fromFirestore: UserAccount.fromFirestore,
-      toFirestore: (UserAccount user, _) => user.toFirestore(),
-    );
+    final ref =
+        FirebaseFirestore.instance.collection("Users").doc(dcoId).withConverter(
+              fromFirestore: UserAccount.fromFirestore,
+              toFirestore: (UserAccount user, _) => user.toFirestore(),
+            );
 
     final snapshot = await ref.get();
     print(snapshot.data());
