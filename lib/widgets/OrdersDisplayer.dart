@@ -4,15 +4,18 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class CardDisplayer extends StatelessWidget {
-  // String _image;
+  final bool orderstatus;
+  final String storename;
 
-  // int _amount;
-  String _storename;
-  bool _textchanger;
-  String _orders;
-  String _timedisplayer;
+  final String order_details;
+  final String orderdate;
+  final String ordernumber;
   CardDisplayer(
-      this._storename, this._textchanger, this._orders, this._timedisplayer);
+      {required this.storename,
+      required this.orderstatus,
+      required this.ordernumber,
+      required this.order_details,
+      required this.orderdate});
 
   Widget build(BuildContext context) {
     var widthg = MediaQuery.of(context).size.width;
@@ -45,11 +48,11 @@ class CardDisplayer extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  _storename,
+                  storename,
                   style: TextStyle(
                       fontSize: widthg * 0.05, fontWeight: FontWeight.bold),
                 ),
-                _textchanger
+                orderstatus
                     ? Text(
                         AppLocalizations.of(context)!.completed,
                         style: TextStyle(
@@ -83,8 +86,13 @@ class CardDisplayer extends StatelessWidget {
                       backgroundColor: Colors.transparent,
                       context: context,
                       builder: (context) {
-                        return Invoice('assets/store-place.png', _storename,
-                            _orders, _timedisplayer);
+                        return Invoice(
+                          image: 'assets/store-place.png',
+                          storename: storename,
+                          orderes: order_details,
+                          time: orderdate,
+                          order_number: ordernumber,
+                        );
                       }),
                   child: Text(AppLocalizations.of(context)!.deitals,
                       style: TextStyle(decoration: TextDecoration.underline)),
