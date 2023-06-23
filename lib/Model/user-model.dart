@@ -1,29 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserAccount {
-  String _id;
-  String _name;
+  String Address;
+  String _fname;
+  String _lname;
   String _email;
   String _phoneNumber;
 
   UserAccount(
-      this._id,
-      this._name,
+      this.Address,
+      this._fname,
+      this._lname,
       this._email,
       this._phoneNumber,
       );
 
-  String get id => _id;
+  String get id => Address;
 
   set id(String value) {
-    _id = value;
+    Address = value;
   }
 
-  String get name => _name;
 
-  set name(String value) {
-    _name = value;
-  }
 
   String get phoneNumber => _phoneNumber;
 
@@ -41,9 +39,10 @@ class UserAccount {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       "Email": _email.toString(),
-      "uid": _id.toString(),
-      "username": _name.toString(),
-      "phoneNumber": _phoneNumber.toString(),
+      "Address": Address.toString(),
+      "First Name": _fname.toString(),
+      "Last Name": _lname.toString(),
+      "Phone Number": _phoneNumber.toString(),
     };
   }
   //
@@ -54,19 +53,26 @@ class UserAccount {
       ) {
     final data = snapshot.data();
     return UserAccount(
-      data?["uid"],
-      data?["username"],
+      data?["Address"],
+      data?["First Name"],
+      data?["Last Name"],
       data?["Email"],
-      data?["phoneNumber"],
+      data?["Phone Number"],
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
-      "id": id,
-      "name": name,
-      "email": email,
-      "phoneNumber": phoneNumber,
+      "Address": Address,
+      "First Name": _fname,
+      "Last Name": _lname,
+      "Email": email,
+      "Phone Number": phoneNumber,
     };
+  }
+
+  @override
+  String toString() {
+    return 'UserAccount{Address: $Address, _fname: $_fname, _lname: $_lname, _email: $_email, _phoneNumber: $_phoneNumber}';
   }
 }

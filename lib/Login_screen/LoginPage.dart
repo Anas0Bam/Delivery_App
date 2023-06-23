@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'package:deliver_app/Service/auth.dart';
 import 'package:deliver_app/widgets/MyButton.dart';
 import 'package:deliver_app/widgets/Textfileddetials.dart';
 import 'package:flutter/services.dart';
@@ -36,7 +37,10 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordcontroller.text,
       );
 
-      if (context.mounted) Navigator.pop(context);
+      if (context.mounted)
+        Navigator.pop(context);
+
+
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
 
@@ -50,6 +54,8 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
+
+
 
   void displayMessage(String message) {
     showDialog(

@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:deliver_app/Model/globals.dart';
+import 'package:deliver_app/Model/user-model.dart';
 import 'package:deliver_app/widgets/MyButton.dart';
 import 'package:deliver_app/widgets/Textfileddetials.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,9 +57,13 @@ class _RegisterPageState extends State<RegisterPage> {
           'First Name': _FirstName.text.trim(),
           'Last Name': _lastName.text.trim(),
           'Address': _Address.text.trim(),
-          'Phone Number': '+966 ' + _Phonenumber.text.trim(),
+          'phoneNumber': '+966 ' + _Phonenumber.text.trim(),
           'Email': _emailcontroller.text.trim()
         });
+
+        userAccount = UserAccount(_FirstName.text, _lastName.text, _Address.text, _Phonenumber.text, _emailcontroller.text);
+
+
       } else if (_passwordcontroller.text !=
           _confirmPasswordTextController.text) {
         Navigator.pop(context);
