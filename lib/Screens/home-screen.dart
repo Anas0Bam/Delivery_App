@@ -4,9 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliver_app/DataTest/categoriesList.dart';
 import 'package:deliver_app/DataTest/placesList.dart';
 import 'package:deliver_app/Model/Orders-Module.dart';
+import 'package:deliver_app/Service/database.dart';
 
 import 'package:deliver_app/constans.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,11 +20,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _userid = FirebaseAuth.instance.currentUser!.uid;
     Set<int> setOfInts = Set();
     setOfInts.add(Random().nextInt(999999999));
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    var Time = DateFormat.yMMMd().format(DateTime.now());
+    String Time = DateFormat.yMMMd().format(DateTime.now());
     String? orders;
     bool orderstatus = false;
     return Scaffold(
@@ -203,9 +207,6 @@ class HomeScreen extends StatelessWidget {
                                 isDismissible: false,
                                 enableDrag: true,
                                 builder: (builder) {
-                                  var user =
-                                      FirebaseAuth.instance.currentUser!.uid;
-
                                   return Container(
                                     height: height * 0.50,
                                     child: Column(
@@ -296,29 +297,32 @@ class HomeScreen extends StatelessWidget {
                                                                 10))),
                                                 color: Colors.blueAccent,
                                                 onPressed: () {
-                                                  Orderlist.add(Orders(
-                                                      placeList[index].image,
-                                                      placeList[index].name,
-                                                      orderstatus,
-                                                      5,
-                                                      orders!,
-                                                      Time));
                                                   FirebaseFirestore.instance
-                                                      .collection('Users')
-                                                      .doc(
-                                                          '$user/orders/$setOfInts')
+                                                      .collection('orders')
+                                                      .doc()
                                                       .set({
                                                     'Place Name':
                                                         placeList[index]
                                                             .name
                                                             .trim(),
-                                                    'Order Number': setOfInts,
+                                                    'User ID': _userid,
+                                                    'Order Number':
+                                                        setOfInts.toString(),
                                                     'Order Date': Time,
                                                     'Order Status': orderstatus,
                                                     'Order Detials': orders
-                                                  }).then((value) =>
-                                                          Navigator.pop(
-                                                              context));
+                                                  });
+                                                  // setNeworders(
+                                                  //     placeList[index]
+                                                  //         .name
+                                                  //         .trim(),
+                                                  //     _userid,
+                                                  //     setOfInts,
+                                                  //     Time,
+                                                  //     orderstatus,
+                                                  //     orders!);
+
+                                                  Navigator.pop(context);
                                                 },
                                                 child: Text(
                                                   AppLocalizations.of(context)!

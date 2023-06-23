@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,8 +13,6 @@ class cart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Set<int> setOfInts = Set();
-    setOfInts.add(Random().nextInt(999999999));
     final currentUser1 = FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       appBar: AppBar(
@@ -24,30 +23,42 @@ class cart extends StatelessWidget {
           ),
           backgroundColor: Colors.white,
           centerTitle: true),
-      body: StreamBuilder<DocumentSnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('Users')
-              .doc('$currentUser1')
+      body: FutureBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          future: FirebaseFirestore.instance
               .collection('orders')
-              .doc('$setOfInts')
-              .snapshots(),
-          builder: (ctx, snapshotd) {
-            if (snapshotd.connectionState == ConnectionState.waiting) {
+              .where('User ID', isEqualTo: currentUser1)
+              .get(),
+          builder: (ctx,
+              AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
-            final userData = snapshotd.data!.data() as Map<String, dynamic>;
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            }
+
+            if (snapshot.data!.docs.isEmpty) {
+              return Center(child: Text('You havn not made amy orders yet'));
+            }
+            final List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
+                snapshot.data!.docs;
+
             return ListView.builder(
-                itemCount: userData.length,
+                itemCount: documents.length,
                 itemBuilder: (context, index) => CardDisplayer(
-                      userData['Place Name'],
-                      userData['Order Status'],
-                      userData['Order Number'],
-                      userData['Order Date'],
+                      orderstatus: documents[index]['Order Status'],
+                      storename: documents[index]['Place Name'],
+                      order_details: documents[index]['Order Detials'],
+                      ordernumber: documents[index]['Order Number'],
+                      orderdate: documents[index]['Order Date'],
                     ));
           }),
-      backgroundColor: Theme.of(context).colorScheme.background,
     );
   }
 }

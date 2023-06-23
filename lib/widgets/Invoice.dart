@@ -2,11 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Invoice extends StatelessWidget {
-  final String _image;
-  final String _storename;
-  final String _orderes;
-  final String _time;
-  const Invoice(this._image, this._storename, this._orderes, this._time);
+  final String image;
+  final String storename;
+  final String orderes;
+  final String time;
+  final String order_number;
+  const Invoice(
+      {required this.image,
+      required this.storename,
+      required this.orderes,
+      required this.time,
+      required this.order_number});
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +36,15 @@ class Invoice extends StatelessWidget {
             child: ListTile(
               leading: Image.asset(
                 scale: widthg * 0.018,
-                _image,
+                image,
               ),
               title: Text(
-                _storename,
+                storename,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [Text(' ${_time}'), Text('#545454f54')],
+                children: [Text(' ${time}'), Text(order_number)],
               ),
               trailing: IconButton(
                 icon: Icon(Icons.clear),
@@ -53,7 +59,7 @@ class Invoice extends StatelessWidget {
             padding: const EdgeInsets.only(left: 9, right: 9),
             child: TextFormField(
               readOnly: true,
-              initialValue: _orderes,
+              initialValue: orderes,
               keyboardType: TextInputType.multiline,
               minLines: 5,
               maxLines: 10,
