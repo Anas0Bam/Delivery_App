@@ -48,8 +48,17 @@ dependencies:
     sdk: flutter
   intl: any
   localization: ^2.1.0
-  
-   
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
+  google_maps_flutter: ^2.3.1
+  flutter_riverpod: ^2.3.6
+  auto_size_text: ^3.0.0
+
+
+
+
+
+
 
 dev_dependencies:
   flutter_test:
