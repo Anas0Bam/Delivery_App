@@ -45,7 +45,6 @@ class cart extends StatelessWidget {
             }
             final List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
                 snapshot.data!.docs;
-
             return ListView.builder(
                 itemCount: documents.length,
                 itemBuilder: (context, index) => CardDisplayer(

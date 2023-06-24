@@ -1,36 +1,15 @@
 import 'dart:math';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliver_app/DataTest/categoriesList.dart';
 import 'package:deliver_app/DataTest/placesList.dart';
-import 'package:deliver_app/Model/Orders-Module.dart';
-import 'package:deliver_app/Model/neighborhood-model.dart';
+
 import 'package:deliver_app/constans.dart';
-import 'package:deliver_app/providers/location-info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../DataTest/orderLists.dart';
-import 'package:geocoding/geocoding.dart';
-
-class HomeScreen extends StatefulWidget {
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  late LocationProvider locationProvider;
-  late Neighborhood neighborhood;
-  bool isLoading = true;
-  String choice = "الجميع";
-
-  @override
-  void initState() {
-    super.initState();
-    initializeLocation();
-  }
 
   Future<void> initializeLocation() async {
     locationProvider = LocationProvider();
@@ -46,22 +25,24 @@ class _HomeScreenState extends State<HomeScreen> {
       initializeLocation();
     }
   }
+=======
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
 //
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      return Scaffold(
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-
+    String _userid = FirebaseAuth.instance.currentUser!.uid;
     Set<int> setOfInts = Set();
     setOfInts.add(Random().nextInt(999999999));
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    var Time = DateFormat.yMMMd().format(DateTime.now());
+    String Time = DateFormat.yMMMd().format(DateTime.now());
     String? orders;
+
+
+
+
     bool orderstatus = false;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -122,6 +103,17 @@ class _HomeScreenState extends State<HomeScreen> {
                               Icon(Icons.arrow_drop_down)
                             ],
                           ),
+                        Row(
+                          children: [
+                            Text(
+                              "شارع التضامن العربي،مشرفة",
+                              style: TextStyle(
+                                  color: colorSteelGray,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Icon(Icons.arrow_drop_down)
+                          ],
                         )
                       ],
                     )
@@ -205,6 +197,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        color: colorWhite,
+                      ),
+                      margin: EdgeInsets.only(left: width * 0.05, right: 2),
+                      padding: EdgeInsets.symmetric(
+                          vertical: height * 0.005, horizontal: width * 0.05),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            categoriesList[index].icon,
+                          ),
+                          SizedBox(
+                            width: width * 0.02,
+                          ),
+                          Text(
+                            categoriesList[index].name,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                        ],
                       ),
                     );
                   },
@@ -456,36 +470,246 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       SizedBox(
                                         width: width * 0.12,
+                    return Container(
+                      child: Column(
+                        children: [
+                          InkWell(
+                            onTap: () => showModalBottomSheet(
+                                isScrollControlled: true,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20),
+                                        topRight: Radius.circular(20))),
+                                backgroundColor: ThemeData().backgroundColor,
+                                context: context,
+                                isDismissible: false,
+                                enableDrag: true,
+                                builder: (builder) {
+                                  return Container(
+                                    height: height * 0.50,
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            placeList[index].name,
+                                            style: TextStyle(
+                                                fontSize: width * 0.07,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 9, right: 9),
+                                            child: TextFormField(
+                                                onChanged: (value) =>
+                                                    orders = value,
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                                minLines: 5,
+                                                maxLines: 10,
+                                                decoration: InputDecoration(
+                                                  suffixIcon: Icon(Icons
+                                                      .local_grocery_store_sharp),
+                                                  filled: true,
+                                                  fillColor: Colors.white,
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          borderSide:
+                                                              BorderSide(
+                                                                  color: Colors
+                                                                      .black)),
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                        color: Colors.black),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20),
+                                                  ),
+                                                  label: Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .deitals),
+                                                  labelStyle: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
+                                                )),
+                                          ),
+                                          Text(
+                                            AppLocalizations.of(context)!.fees,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              MaterialButton(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10))),
+                                                  color: Colors.red,
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                  child: Text(
+                                                      AppLocalizations.of(
+                                                              context)!
+                                                          .cancel,
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              width * 0.04,
+                                                          fontWeight: FontWeight
+                                                              .bold))),
+                                              MaterialButton(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))),
+                                                color: Colors.blueAccent,
+                                                onPressed: () {
+                                                  FirebaseFirestore.instance
+                                                      .collection('orders')
+                                                      .doc()
+                                                      .set({
+                                                    'Place Name':
+                                                        placeList[index]
+                                                            .name
+                                                            .trim(),
+                                                    'User ID': _userid,
+                                                    'Order Number':
+                                                        setOfInts.toString(),
+                                                    'Order Date': Time,
+                                                    'Order Status': orderstatus,
+                                                    'Order Detials': orders
+                                                  });
+                                                  // setNeworders(
+                                                  //     placeList[index]
+                                                  //         .name
+                                                  //         .trim(),
+                                                  //     _userid,
+                                                  //     setOfInts,
+                                                  //     Time,
+                                                  //     orderstatus,
+                                                  //     orders!);
+
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .send,
+                                                  style: TextStyle(
+                                                      fontSize: width * 0.04,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ]),
+                                  );
+                                }),
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15)),
+                                color: colorLightGray,
+                                border: Border.all(color: colorDarkGray),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(
+                                        0.3), // Replace with your desired shadow color
+                                    blurRadius:
+                                        5, // Replace with your desired blur radius
+                                    spreadRadius:
+                                        0, // Set to 0 to restrict shadow to the bottom
+                                    offset: Offset(0,
+                                        8), // Adjust the offset for desired shadow position
+                                  ),
+                                ],
+                              ),
+                              margin:
+                                  EdgeInsets.only(left: width * 0.05, right: 2),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: height * 0.005,
+                                  horizontal: width * 0.03),
+                              //I have change thw width to 0.03
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(AppLocalizations.of(context)!.opentext,
+                                      style: TextStyle(
+                                          color: Color(0xFF49EE20),
+                                          fontSize: 18)),
+                                  Image.asset(
+                                    placeList[index].image,
+                                    height: height * 0.2,
+                                  ),
+                                  SizedBox(
+                                    width: width * 0.02,
+                                  ),
+                                  // Container(
+                                  //   child: InkWell(
+                                  //     child: Container(
+                                  //       height: 50,
+                                  //       width: 45,
+                                  //       decoration: BoxDecoration(
+                                  //         color: colorVeryLightGray,
+                                  //         borderRadius: BorderRadius.all(
+                                  //             Radius.circular(10)),
+                                  //         boxShadow: [
+                                  //           BoxShadow(
+                                  //             color: Colors.grey.withOpacity(
+                                  //                 0.5), // Replace with your desired shadow color
+                                  //             spreadRadius:
+                                  //                 1, // Replace with your desired spread radius
+                                  //             blurRadius:
+                                  //                 5, // Replace with your desired blur radius
+                                  //             offset: Offset(0,
+                                  //                 3), // Replace with your desired offset
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //       child: Icon(
+                                  //         Icons.favorite_border,
+                                  //         color: Color(0xFFFF9832),
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              children: [
+                                Container(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        placeList[index].name,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
                                       ),
-                                      // Container(
-                                      //   child: InkWell(
-                                      //     child: Container(
-                                      //       height: 50,
-                                      //       width: 45,
-                                      //       decoration: BoxDecoration(
-                                      //         color: colorVeryLightGray,
-                                      //         borderRadius: BorderRadius.all(
-                                      //             Radius.circular(10)),
-                                      //         boxShadow: [
-                                      //           BoxShadow(
-                                      //             color: Colors.grey.withOpacity(
-                                      //                 0.5), // Replace with your desired shadow color
-                                      //             spreadRadius:
-                                      //                 1, // Replace with your desired spread radius
-                                      //             blurRadius:
-                                      //                 5, // Replace with your desired blur radius
-                                      //             offset: Offset(0,
-                                      //                 3), // Replace with your desired offset
-                                      //           ),
-                                      //         ],
-                                      //       ),
-                                      //       child: Icon(
-                                      //         Icons.favorite_border,
-                                      //         color: Color(0xFFFF9832),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // )
+                                      Row(
+                                        children: [
+                                          Text(placeList[index].rate),
+                                          Icon(Icons.star,
+                                              color: Color(0xFFFF9832))
+                                        ],
+                                      )
                                     ],
                                   ),
                                 ),
@@ -518,6 +742,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                     }
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
                   },
                 ),
               ),
