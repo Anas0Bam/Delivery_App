@@ -103,18 +103,7 @@ class HomeScreen extends StatelessWidget {
                               Icon(Icons.arrow_drop_down)
                             ],
                           ),
-                        Row(
-                          children: [
-                            Text(
-                              "شارع التضامن العربي،مشرفة",
-                              style: TextStyle(
-                                  color: colorSteelGray,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Icon(Icons.arrow_drop_down)
-                          ],
-                        )
+                    
                       ],
                     )
                   ],
