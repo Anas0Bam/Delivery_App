@@ -286,6 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 Text(
                                                   placeList[index].name,
+                                                  textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                       fontSize: width * 0.07,
                                                       fontWeight:
