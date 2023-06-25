@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:deliver_app/Login_screen/VeryfiAut.dart';
 import 'package:deliver_app/Model/globals.dart';
+import 'package:deliver_app/Screens/home-screen.dart';
 import 'package:deliver_app/Service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,7 @@ class _TabsScreenState extends State<TabsScreen> {
     const more(),
     // const Favorite(),
 
-    const store(),
+    HomeScreen(),
     const cart(),
 
     // const Notificationpage(),

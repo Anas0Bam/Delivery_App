@@ -1,0 +1,33 @@
+   child: Row(
+          children: [
+            SizedBox(
+              width: widthg * 0.02,
+            ),
+          
+            SizedBox(
+              width: widthg * 0.05,
+            ),
+            Column(
+              children: [
+              
+              
+              ],
+            ),
+            Expanded(
+              child: SizedBox(
+                width: widthg,
+              ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: height * 00.02),
+                Text(
+                  "5 " + AppLocalizations.of(context)!.money,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+               
+              ],
+            )
+          ],
+        ),

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliver_app/DataTest/categoriesList.dart';
 import 'package:deliver_app/DataTest/placesList.dart';
@@ -10,6 +11,7 @@ import 'package:deliver_app/constans.dart';
 import 'package:deliver_app/providers/location-info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../DataTest/orderLists.dart';
@@ -55,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: Center(child: CircularProgressIndicator()),
       );
     }
-
+    var user = FirebaseAuth.instance.currentUser!.uid;
     Set<int> setOfInts = Set();
     setOfInts.add(Random().nextInt(999999999));
     var width = MediaQuery.of(context).size.width;
@@ -76,219 +78,220 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.only(top: height * 0.02),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding:
-                    EdgeInsets.only(left: width * 0.05, right: width * 0.05),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage('assets/app_log.png'),
-                      radius: 25,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: colorBlue,
-                            ),
-                            SizedBox(
-                              width: width * 0.02,
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.location,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            )
-                          ],
-                        ),
-                        InkWell(
-                          onTap: () async {},
-                          child: Row(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.only(left: width * 0.05, right: width * 0.05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: AssetImage('assets/app_log.png'),
+                        radius: 25,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Row(
                             children: [
-                              Text(
-                                "${neighborhood.neighborhood}،${neighborhood.street}",
-                                style: TextStyle(
-                                    color: colorSteelGray,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.bold),
+                              Icon(
+                                Icons.location_on_outlined,
+                                color: colorBlue,
                               ),
-                              Icon(Icons.arrow_drop_down)
+                              SizedBox(
+                                width: width * 0.02,
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.location,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              )
                             ],
                           ),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: height * 0.05,
-              ),
-              Container(
-                padding:
-                    EdgeInsets.only(left: width * 0.05, right: width * 0.05),
-                child: TextField(
-                  decoration: InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                    hintText: 'Search',
-                    filled: true,
-                    fillColor: colorVeryLightGray,
-                    prefixIcon: Icon(Icons.search),
-                    enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.transparent),
-                        borderRadius: BorderRadius.circular(20.0)),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(color: Colors.red)),
+                          InkWell(
+                            onTap: () async {},
+                            child: Row(
+                              children: [
+                                Text(
+                                  "${neighborhood.neighborhood}،${neighborhood.street}",
+                                  style: TextStyle(
+                                      color: colorSteelGray,
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Icon(Icons.arrow_drop_down)
+                              ],
+                            ),
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
-              ),
-              SizedBox(
-                height: height * 0.025,
-              ),
-              Container(
-                padding:
-                    EdgeInsets.only(left: width * 0.05, right: width * 0.05),
-                child: Text(
-                  AppLocalizations.of(context)!.categories,
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                SizedBox(
+                  height: height * 0.05,
                 ),
-              ),
-              SizedBox(
-                height: height * 0.025,
-              ),
-              Container(
-                height: height * 0.06,
-                child: ListView.builder(
-                  itemCount: categoriesList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    bool isTapped = false;
-                    if (choice == categoriesList[index].name) isTapped = true;
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          choice = categoriesList[index].name;
-                        });
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            color: colorWhite,
-                            border: Border.all(
-                                color: isTapped
-                                    ? Colors.black
-                                    : Colors.transparent,
-                                width: 2)),
-                        margin: EdgeInsets.only(left: width * 0.05, right: 2),
-                        padding: EdgeInsets.symmetric(
-                            vertical: height * 0.005, horizontal: width * 0.05),
-                        child: Row(
-                          children: [
-                            Image.asset(
-                              categoriesList[index].icon,
-                            ),
-                            SizedBox(
-                              width: width * 0.02,
-                            ),
-                            Text(
-                              categoriesList[index].name,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Container(
-                padding:
-                    EdgeInsets.only(left: width * 0.05, right: width * 0.05),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.more,
-                      style: TextStyle(
-                          color: colorSteelGray,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                Container(
+                  padding:
+                      EdgeInsets.only(left: width * 0.05, right: width * 0.05),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                      hintText: 'Search',
+                      filled: true,
+                      fillColor: colorVeryLightGray,
+                      prefixIcon: Icon(Icons.search),
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.transparent),
+                          borderRadius: BorderRadius.circular(20.0)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(color: Colors.red)),
                     ),
-                    Text(
-                      AppLocalizations.of(context)!.near,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: height * 0.02,
-              ),
-              Container(
-                height: height * 0.28,
-                child: ListView.builder(
-                  itemCount: placeList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (!neighborhood.neighborhood
-                        .contains(placeList[index].nieprhood)) {
-                      print("false");
-                      return Container();
-                    } else {
-                      print("true");
-                      if (!(placeList[index].type.contains(choice) ||
-                          choice == "الجميع"))
-                        return Container();
-                      else
-                        return Container(
-                          child: Column(
+                SizedBox(
+                  height: height * 0.025,
+                ),
+                Container(
+                  padding:
+                      EdgeInsets.only(left: width * 0.05, right: width * 0.05),
+                  child: Text(
+                    AppLocalizations.of(context)!.categories,
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.025,
+                ),
+                Container(
+                  height: height * 0.06,
+                  child: ListView.builder(
+                    itemCount: categoriesList.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      bool isTapped = false;
+                      if (choice == categoriesList[index].name) isTapped = true;
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            choice = categoriesList[index].name;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                              color: colorWhite,
+                              border: Border.all(
+                                  color: isTapped
+                                      ? Colors.black
+                                      : Colors.transparent,
+                                  width: 2)),
+                          margin: EdgeInsets.only(left: width * 0.05, right: 2),
+                          padding: EdgeInsets.symmetric(
+                              vertical: height * 0.005,
+                              horizontal: width * 0.05),
+                          child: Row(
                             children: [
-                              InkWell(
+                              Image.asset(
+                                categoriesList[index].icon,
+                              ),
+                              SizedBox(
+                                width: width * 0.02,
+                              ),
+                              Text(
+                                categoriesList[index].name,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 18),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                Container(
+                  padding:
+                      EdgeInsets.only(left: width * 0.05, right: width * 0.05),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.more,
+                        style: TextStyle(
+                            color: colorSteelGray,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                      Text(
+                        AppLocalizations.of(context)!.near,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
+                      )
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                Container(
+                  height: height * 0.28,
+                  child: ListView.builder(
+                    itemCount: placeList.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (!neighborhood.neighborhood
+                          .contains(placeList[index].nieprhood)) {
+                        print("false");
+                        return Container();
+                      } else {
+                        print("true");
+                        if (!(placeList[index].type.contains(choice) ||
+                            choice == "الجميع"))
+                          return Container();
+                        else
+                          return Column(
+                            children: [
+                              GestureDetector(
                                 onTap: () => showModalBottomSheet(
+                                    isDismissible: true,
+                                    useSafeArea: true,
+                                    backgroundColor: Colors.transparent,
                                     isScrollControlled: true,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(20),
-                                            topRight: Radius.circular(20))),
-                                    backgroundColor:
-                                        ThemeData().backgroundColor,
                                     context: context,
-                                    isDismissible: false,
-                                    enableDrag: true,
-                                    builder: (builder) {
-                                      var user = FirebaseAuth
-                                          .instance.currentUser!.uid;
-
-                                      return Container(
-                                        height: height * 0.50,
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Text(
-                                                placeList[index].name,
-                                                style: TextStyle(
-                                                    fontSize: width * 0.07,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 9, right: 9),
-                                                child: TextFormField(
+                                    builder: (contex) {
+                                      return Dialog(
+                                        backgroundColor:
+                                            Theme.of(context).backgroundColor,
+                                        insetPadding:
+                                            EdgeInsets.symmetric(vertical: 1),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                          height: height * 0.50,
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceAround,
+                                              children: [
+                                                Text(
+                                                  placeList[index].name,
+                                                  style: TextStyle(
+                                                      fontSize: width * 0.07,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                TextField(
                                                     onChanged: (value) =>
                                                         orders = value,
                                                     keyboardType:
@@ -327,89 +330,97 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               FontWeight.bold,
                                                           fontSize: 20),
                                                     )),
-                                              ),
-                                              Text(
-                                                AppLocalizations.of(context)!
-                                                    .fees,
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  MaterialButton(
+                                                Text(
+                                                  AppLocalizations.of(context)!
+                                                      .fees,
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: [
+                                                    MaterialButton(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius.all(
+                                                                    Radius.circular(
+                                                                        10))),
+                                                        color: Colors.red,
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                context),
+                                                        child: Text(
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .cancel,
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    width *
+                                                                        0.04,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold))),
+                                                    MaterialButton(
                                                       shape: RoundedRectangleBorder(
                                                           borderRadius:
                                                               BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      10))),
-                                                      color: Colors.red,
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              context),
-                                                      child: Text(
-                                                          AppLocalizations.of(
-                                                                  context)!
-                                                              .cancel,
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  width * 0.04,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold))),
-                                                  MaterialButton(
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10))),
-                                                    color: Colors.blueAccent,
-                                                    onPressed: () {
-                                                      Orderlist.add(Orders(
-                                                          placeList[index]
-                                                              .image,
-                                                          placeList[index].name,
-                                                          orderstatus,
-                                                          5,
-                                                          orders!,
-                                                          Time));
-                                                      FirebaseFirestore.instance
-                                                          .collection('orders')
-                                                          .doc()
-                                                          .set({
-                                                        'Place Name':
+                                                                  Radius
+                                                                      .circular(
+                                                                          10))),
+                                                      color: Colors.blueAccent,
+                                                      onPressed: () {
+                                                        Orderlist.add(Orders(
                                                             placeList[index]
-                                                                .name
-                                                                .trim(),
-                                                        'Order Number':
-                                                            setOfInts
-                                                                .toString(),
-                                                        'Order Date': Time,
-                                                        'Order Status':
+                                                                .image,
+                                                            placeList[index]
+                                                                .name,
                                                             orderstatus,
-                                                        'Order Detials': orders,
-                                                        'User ID': user
-                                                      }).then((value) =>
-                                                              Navigator.pop(
-                                                                  context));
-                                                    },
-                                                    child: Text(
-                                                      AppLocalizations.of(
-                                                              context)!
-                                                          .send,
-                                                      style: TextStyle(
-                                                          fontSize:
-                                                              width * 0.04,
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                            5,
+                                                            orders!,
+                                                            Time));
+                                                        FirebaseFirestore
+                                                            .instance
+                                                            .collection(
+                                                                'orders')
+                                                            .doc()
+                                                            .set({
+                                                          'Place Name':
+                                                              placeList[index]
+                                                                  .name
+                                                                  .trim(),
+                                                          'Order Number':
+                                                              setOfInts
+                                                                  .toString(),
+                                                          'Order Date': Time,
+                                                          'Order Status':
+                                                              orderstatus,
+                                                          'Order Detials':
+                                                              orders,
+                                                          'User ID': user
+                                                        }).then((value) =>
+                                                                Navigator.pop(
+                                                                    context));
+                                                      },
+                                                      child: Text(
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .send,
+                                                        style: TextStyle(
+                                                            fontSize:
+                                                                width * 0.04,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ]),
+                                                  ],
+                                                ),
+                                              ]),
+                                        ),
                                       );
                                     }),
                                 child: Container(
@@ -515,27 +526,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               )
                             ],
-                          ),
-                        );
-                    }
-                  },
+                          );
+                      }
+                    },
+                  ),
                 ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-                padding: EdgeInsets.all(15),
-                width: width,
-                height: height * 0.15,
-                decoration: BoxDecoration(
-                    color: colorVeryLightGray,
-                    borderRadius: BorderRadius.all(Radius.circular(20))),
-                alignment: Alignment.center,
-                child: Text(
-                  AppLocalizations.of(context)!.offer,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-                ),
-              )
-            ],
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: width * 0.05),
+                  padding: EdgeInsets.all(15),
+                  width: width,
+                  height: height * 0.15,
+                  decoration: BoxDecoration(
+                      color: colorVeryLightGray,
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  alignment: Alignment.center,
+                  child: Text(
+                    AppLocalizations.of(context)!.offer,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),

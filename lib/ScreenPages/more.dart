@@ -122,7 +122,8 @@ class more extends StatelessWidget {
                                     final provider = Provider.of<LocalProvider>(
                                         context,
                                         listen: false);
-                                    provider.changeLanguage('ar');
+                                    provider.changeLanguage('ar').then(
+                                        (value) => Navigator.pop(context));
                                   },
                                   child: Text('العربية',
                                       style: TextStyle(
@@ -140,7 +141,8 @@ class more extends StatelessWidget {
                                     final provider = Provider.of<LocalProvider>(
                                         context,
                                         listen: false);
-                                    provider.changeLanguage('en');
+                                    provider.changeLanguage('en').then(
+                                        (value) => Navigator.pop(context));
                                   },
                                   child: Text(
                                     'English',
