@@ -5,18 +5,23 @@ import 'package:deliver_app/intro_screens/onboardingscreen.dart';
 import 'package:deliver_app/l10n/l10n.dart';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'providers/language-provider.dart';
 
 int? initScreen;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  LocalProvider localProvider = LocalProvider();
+  await localProvider.initialize();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   initScreen = await prefs.getInt('initScreen');
   await prefs.setInt('initScreen', 1);
@@ -26,14 +31,11 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(ProviderScope(child: HomePage()));
+  runApp(ChangeNotifierProvider<LocalProvider>.value(
+      value: localProvider, child: HomePage()));
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({
-    super.key,
-  });
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,13 +44,15 @@ class HomePage extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Schyler",
         appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
+          titleTextStyle: TextStyle(
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25),
           color: Colors.white,
         ),
         canvasColor: Colours.lightSkyBlue,
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue).copyWith(background: Colours.lightSkyBlue),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
+            .copyWith(background: Colours.lightSkyBlue),
       ),
-
+      locale: Provider.of<LocalProvider>(context).locale,
       supportedLocales: L10n.all,
       localizationsDelegates: [
         AppLocalizations.delegate,

@@ -54,5 +54,6 @@
     "enter":"Enter your Email",
     "reset":"Reset your password",
     "verfi":"A verification email has been sent to: ",
-    "resend":"Resend an email" }
+    "resend":"Resend an email",
+    "selectLnaguage":"Select a language" }
   

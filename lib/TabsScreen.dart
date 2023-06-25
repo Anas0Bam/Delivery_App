@@ -45,7 +45,7 @@ class _TabsScreenState extends State<TabsScreen> {
         Duration(seconds: 3),
         (_) => checkEmailVerified(),
       );
-    }else{
+    } else {
       getDecData(dcoId: FirebaseAuth.instance.currentUser!.uid);
       print(userAccount.toString());
     }
