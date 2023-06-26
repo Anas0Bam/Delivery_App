@@ -1,4 +1,3 @@
-import 'package:deliver_app/ScreenPages/ProfilePage.dart';
 import 'package:deliver_app/intro_screens/onboardingscreen.dart';
 import 'package:deliver_app/providers/language-provider.dart';
 // import 'package:deliver_app/intro_screens/onboardingscreen.dart';
@@ -8,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'ProfilePage.dart';
 
 class more extends StatelessWidget {
   const more({

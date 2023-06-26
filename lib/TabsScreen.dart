@@ -6,9 +6,9 @@ import 'package:deliver_app/Screens/home-screen.dart';
 import 'package:deliver_app/Service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import './ScreenPages/more.dart';
-import './ScreenPages/store.dart';
-import 'ScreenPages/cart.dart';
+import 'Screens/more.dart';
+
+import 'Screens/cart.dart';
 // import './ScreenPages/ProfilePage.dart';
 // import './ScreenPages/cart.dart';
 // import './ScreenPages/Favorite.dart';
