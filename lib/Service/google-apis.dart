@@ -1,7 +1,6 @@
 import 'package:deliver_app/Model/location-model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 class MapController {
@@ -52,8 +51,6 @@ class MapController {
     print('Selected Location: ${model.selectedLocation}');
   }
 }
-
-
 
 Future<void> retrieveLocation() async {
   bool serviceEnabled;
