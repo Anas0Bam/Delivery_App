@@ -22,6 +22,11 @@ class UserAccount {
   }
 
 
+  String get fname => _fname;
+
+  set fname(String value) {
+    _fname = value;
+  }
 
   String get phoneNumber => _phoneNumber;
 
@@ -74,5 +79,11 @@ class UserAccount {
   @override
   String toString() {
     return 'UserAccount{Address: $Address, _fname: $_fname, _lname: $_lname, _email: $_email, _phoneNumber: $_phoneNumber}';
+  }
+
+  String get lname => _lname;
+
+  set lname(String value) {
+    _lname = value;
   }
 }
