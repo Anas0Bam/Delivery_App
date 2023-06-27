@@ -7,7 +7,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliver_app/DataTest/categoriesList.dart';
 import 'package:deliver_app/DataTest/orderLists.dart';
 import 'package:deliver_app/DataTest/placesList.dart';
-import 'package:deliver_app/Model/globals.dart';
 
 import 'package:deliver_app/Model/neighborhood-model.dart';
 import 'package:deliver_app/constans.dart';
@@ -67,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   .snapshots();
               ;
             });
-            if (isOrderOpen!) timer?.cancel();
+            if (isOrderOpen) timer?.cancel();
           }
         },
       );
