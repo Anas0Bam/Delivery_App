@@ -1,21 +1,25 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliver_app/DataTest/categoriesList.dart';
+import 'package:deliver_app/DataTest/orderLists.dart';
 import 'package:deliver_app/DataTest/placesList.dart';
-import 'package:deliver_app/Model/Orders-Module.dart';
+import 'package:deliver_app/Model/globals.dart';
+
 import 'package:deliver_app/Model/neighborhood-model.dart';
 import 'package:deliver_app/constans.dart';
 import 'package:deliver_app/providers/location-info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../DataTest/orderLists.dart';
-import 'package:geocoding/geocoding.dart';
+
+import '../Service/auth.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -27,11 +31,93 @@ class _HomeScreenState extends State<HomeScreen> {
   late Neighborhood neighborhood;
   bool isLoading = true;
   String choice = "الجميع";
+  bool isOrderOpen = true;
 
+  Timer? timer;
+  var sss;
+  // bool? sss;
   @override
   void initState() {
     super.initState();
     initializeLocation();
+    sss = FirebaseFirestore.instance
+        .collection('orders')
+        .where(
+          'User ID',
+          isEqualTo: FirebaseAuth.instance.currentUser,
+        )
+        .where('Order Status', isEqualTo: false)
+        .get();
+    if (!isOrderOpen) {
+      startTimer();
+      timer = Timer.periodic(
+        Duration(seconds: 5),
+        (_) {
+          Future checkEmailVerified() async {
+            await FirebaseAuth.instance.currentUser!.reload();
+            setState(() {
+              isOrderOpen;
+              sss = FirebaseFirestore.instance
+                  .collection('orders')
+                  .where(
+                    'User ID',
+                    isEqualTo: FirebaseAuth.instance.currentUser,
+                  )
+                  .where('Order Status', isEqualTo: false)
+                  .snapshots();
+              ;
+            });
+            if (isOrderOpen!) timer?.cancel();
+          }
+        },
+      );
+    }
+  }
+
+  Timer? _timer;
+
+  @override
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed
+    _timer!.cancel();
+    super.dispose();
+  }
+
+  var Time = DateFormat.yMMMd().format(DateTime.now());
+  DateTime timee = DateTime.now();
+  void startTimer() {
+    const duration = Duration(seconds: 5);
+    _timer = Timer.periodic(duration, (Timer timer) {
+      // Show the dialog every minute
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Dialog '),
+            content: Text('This is a dialog that appears every minute.'),
+            actions: <Widget>[
+              Row(children: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(AppLocalizations.of(context)!.cancel)),
+                TextButton(
+                    onPressed: () {
+                      updateOrderStatus();
+
+                      Navigator.pop(context);
+                      _timer!.cancel();
+                      isOrderOpen = true;
+                    },
+                    child: Text('yes')),
+              ])
+            ],
+          );
+        },
+      );
+    });
   }
 
   Future<void> initializeLocation() async {
@@ -62,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setOfInts.add(Random().nextInt(999999999));
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    var Time = DateFormat.yMMMd().format(DateTime.now());
+
     String? orders;
     bool orderstatus = false;
     return Scaffold(
@@ -261,169 +347,243 @@ class _HomeScreenState extends State<HomeScreen> {
                           return Column(
                             children: [
                               GestureDetector(
-                                onTap: () => showModalBottomSheet(
-                                    isDismissible: true,
-                                    useSafeArea: true,
-                                    backgroundColor: Colors.transparent,
-                                    isScrollControlled: true,
-                                    context: context,
-                                    builder: (contex) {
-                                      return Dialog(
-                                        backgroundColor:
-                                            Theme.of(context).backgroundColor,
-                                        insetPadding:
-                                            EdgeInsets.symmetric(vertical: 1),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          height: height * 0.50,
-                                          child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Text(
-                                                  placeList[index].name,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                      fontSize: width * 0.07,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                TextField(
-                                                    onChanged: (value) =>
-                                                        orders = value,
-                                                    keyboardType:
-                                                        TextInputType.multiline,
-                                                    minLines: 5,
-                                                    maxLines: 10,
-                                                    decoration: InputDecoration(
-                                                      suffixIcon: Icon(Icons
-                                                          .local_grocery_store_sharp),
-                                                      filled: true,
-                                                      fillColor: Colors.white,
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20),
-                                                              borderSide: BorderSide(
-                                                                  color: Colors
-                                                                      .black)),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color:
-                                                                Colors.black),
+                                onTap: () =>
+                                    // sss!
+                                    // ignore: dead_code
+                                    showModalBottomSheet(
+                                        isDismissible: true,
+                                        useSafeArea: true,
+                                        backgroundColor: Colors.transparent,
+                                        isScrollControlled: true,
+                                        context: context,
+                                        builder: (contex) {
+                                          return isOrderOpen
+                                              ? Dialog(
+                                                  backgroundColor:
+                                                      Theme.of(context)
+                                                          .backgroundColor,
+                                                  insetPadding:
+                                                      EdgeInsets.symmetric(
+                                                          vertical: 1),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(20),
-                                                      ),
-                                                      label: Text(
-                                                          AppLocalizations.of(
-                                                                  context)!
-                                                              .deitals),
-                                                      labelStyle: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 20),
-                                                    )),
-                                                Text(
-                                                  AppLocalizations.of(context)!
-                                                      .fees,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20),
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    MaterialButton(
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius.all(
-                                                                    Radius.circular(
-                                                                        10))),
-                                                        color: Colors.red,
-                                                        onPressed: () =>
-                                                            Navigator.pop(
-                                                                context),
-                                                        child: Text(
-                                                            AppLocalizations.of(
-                                                                    context)!
-                                                                .cancel,
+                                                                .circular(20)),
+                                                    height: height * 0.50,
+                                                    child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceAround,
+                                                        children: [
+                                                          Text(
+                                                            placeList[index]
+                                                                .name,
+                                                            textAlign: TextAlign
+                                                                .center,
                                                             style: TextStyle(
                                                                 fontSize:
                                                                     width *
-                                                                        0.04,
+                                                                        0.07,
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .bold))),
-                                                    MaterialButton(
-                                                      shape: RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          10))),
-                                                      color: Colors.blueAccent,
-                                                      onPressed: () {
-                                                        Orderlist.add(Orders(
-                                                            placeList[index]
-                                                                .image,
-                                                            placeList[index]
-                                                                .name,
-                                                            orderstatus,
-                                                            5,
-                                                            orders!,
-                                                            Time));
-                                                        FirebaseFirestore
-                                                            .instance
-                                                            .collection(
-                                                                'orders')
-                                                            .doc()
-                                                            .set({
-                                                          'Place Name':
-                                                              placeList[index]
-                                                                  .name
-                                                                  .trim(),
-                                                          'Order Number':
-                                                              setOfInts
-                                                                  .toString(),
-                                                          'Order Date': Time,
-                                                          'Order Status':
-                                                              orderstatus,
-                                                          'Order Detials':
-                                                              orders,
-                                                          'User ID': user
-                                                        }).then((value) =>
-                                                                Navigator.pop(
-                                                                    context));
-                                                      },
-                                                      child: Text(
-                                                        AppLocalizations.of(
-                                                                context)!
-                                                            .send,
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                width * 0.04,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ]),
-                                        ),
-                                      );
-                                    }),
+                                                                        .bold),
+                                                          ),
+                                                          TextField(
+                                                              onChanged:
+                                                                  (value) =>
+                                                                      orders =
+                                                                          value,
+                                                              keyboardType:
+                                                                  TextInputType
+                                                                      .multiline,
+                                                              minLines: 5,
+                                                              maxLines: 10,
+                                                              decoration:
+                                                                  InputDecoration(
+                                                                suffixIcon:
+                                                                    Icon(Icons
+                                                                        .local_grocery_store_sharp),
+                                                                filled: true,
+                                                                fillColor:
+                                                                    Colors
+                                                                        .white,
+                                                                focusedBorder: OutlineInputBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20),
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                            color:
+                                                                                Colors.black)),
+                                                                enabledBorder:
+                                                                    OutlineInputBorder(
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                          color:
+                                                                              Colors.black),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              20),
+                                                                ),
+                                                                label: Text(
+                                                                    AppLocalizations.of(
+                                                                            context)!
+                                                                        .deitals),
+                                                                labelStyle: TextStyle(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontSize:
+                                                                        20),
+                                                              )),
+                                                          Text(
+                                                            AppLocalizations.of(
+                                                                    context)!
+                                                                .fees,
+                                                            style: TextStyle(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                fontSize: 20),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                            children: [
+                                                              MaterialButton(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.all(Radius.circular(
+                                                                              10))),
+                                                                  color: Colors
+                                                                      .red,
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(
+                                                                          context),
+                                                                  child: Text(
+                                                                      AppLocalizations.of(context)!
+                                                                          .cancel,
+                                                                      style: TextStyle(
+                                                                          fontSize: width *
+                                                                              0.04,
+                                                                          fontWeight:
+                                                                              FontWeight.bold))),
+                                                              MaterialButton(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(10))),
+                                                                color: Colors
+                                                                    .blueAccent,
+                                                                onPressed:
+                                                                    () async {
+                                                                  FirebaseFirestore
+                                                                      .instance
+                                                                      .collection(
+                                                                          'orders')
+                                                                      .doc()
+                                                                      .set({
+                                                                        'Place Name': placeList[index]
+                                                                            .name
+                                                                            .trim(),
+                                                                        'Order Number':
+                                                                            setOfInts.toString(),
+                                                                        'Order Date':
+                                                                            Time,
+                                                                        'Order Status':
+                                                                            orderstatus,
+                                                                        'Order Detials':
+                                                                            orders,
+                                                                        'User ID':
+                                                                            user
+                                                                      })
+                                                                      .then((value) =>
+                                                                          isOrderOpen =
+                                                                              false)
+                                                                      .then((value) =>
+                                                                          startTimer())
+                                                                      .then((value) =>
+                                                                          Navigator.pop(
+                                                                              context));
+                                                                },
+                                                                child: Text(
+                                                                  AppLocalizations.of(
+                                                                          context)!
+                                                                      .send,
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          width *
+                                                                              0.04,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ]),
+                                                  ),
+                                                )
+                                              : Container(
+                                                  color: Colors.white,
+                                                  height: height * 0.4,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      Column(children: [
+                                                        Text(
+                                                          'Have you finished your previous order?',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              TextButton(
+                                                                child: Text(
+                                                                  'Order received',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                                onPressed: null,
+                                                              ),
+                                                              TextButton(
+                                                                child: Text(
+                                                                  'Having an issue?',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          15,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold),
+                                                                ),
+                                                                onPressed: null,
+                                                              ),
+                                                            ])
+                                                      ]),
+                                                    ],
+                                                  ),
+                                                );
+                                        }),
                                 child: Container(
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(

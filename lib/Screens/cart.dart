@@ -41,7 +41,8 @@ class cart extends StatelessWidget {
             }
 
             if (snapshot.data!.docs.isEmpty) {
-              return Center(child: Text('You havn not made amy orders yet'));
+              return Center(
+                  child: Text(AppLocalizations.of(context)!.noOrders));
             }
             final List<QueryDocumentSnapshot<Map<String, dynamic>>> documents =
                 snapshot.data!.docs;

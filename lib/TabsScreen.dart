@@ -6,6 +6,7 @@ import 'package:deliver_app/Screens/home-screen.dart';
 import 'package:deliver_app/Service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'Screens/more.dart';
 
 import 'Screens/cart.dart';
@@ -49,6 +50,8 @@ class _TabsScreenState extends State<TabsScreen> {
     } else {
       getDecData(dcoId: FirebaseAuth.instance.currentUser!.uid);
       print(userAccount.toString());
+      // getOrders(dcoId: FirebaseAuth.instance.currentUser!.uid);
+      // print(orderList);
     }
   }
 
@@ -82,8 +85,6 @@ class _TabsScreenState extends State<TabsScreen> {
 
     HomeScreen(),
     const cart(),
-
-    // const Notificationpage(),
   ];
 
   int d = 1;
@@ -129,6 +130,7 @@ class _TabsScreenState extends State<TabsScreen> {
                   Icons.store_mall_directory_outlined,
                 ),
                 Icon(Icons.add_shopping_cart_sharp),
+
                 // IconButton(
                 //   icon: Icon(Icons.notifications_active_outlined),
                 //   onPressed: snacl,

@@ -61,9 +61,8 @@ class _RegisterPageState extends State<RegisterPage> {
           'Email': _emailcontroller.text.trim()
         });
 
-        userAccount = UserAccount(_FirstName.text, _lastName.text, _Address.text, _Phonenumber.text, _emailcontroller.text);
-
-
+        userAccount = UserAccount(_FirstName.text, _lastName.text,
+            _Address.text, _Phonenumber.text, _emailcontroller.text);
       } else if (_passwordcontroller.text !=
           _confirmPasswordTextController.text) {
         Navigator.pop(context);

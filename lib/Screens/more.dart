@@ -57,12 +57,25 @@ class more extends StatelessWidget {
                 endIndent: 15,
               ),
               cardw(
-                  () => showDialog(
+                  () => showModalBottomSheet(
+                      isScrollControlled: true,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          content:
-                              Text(AppLocalizations.of(context)!.aboutustext),
+                        return Container(
+                          margin: EdgeInsets.all(widthg * 0.04),
+                          height: height * 0.4,
+                          child: Text(
+                            AppLocalizations.of(context)!.aboutustext,
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.3,
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: widthg * 0.05),
+                          ),
                         );
                       }),
                   AppLocalizations.of(context)!.aboutus,
@@ -157,6 +170,38 @@ class more extends StatelessWidget {
                       }),
                   AppLocalizations.of(context)!.language,
                   Icons.language,
+                  Colors.black),
+              Divider(
+                indent: 15,
+                endIndent: 15,
+                color: Colors.white,
+                thickness: 3,
+              ),
+              cardw(
+                  () => showModalBottomSheet(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(20),
+                              topRight: Radius.circular(20))),
+                      context: context,
+                      builder: (context) {
+                        return ListView(children: [
+                          Container(
+                            margin: EdgeInsets.all(widthg * 0.04),
+                            child: Text(
+                              AppLocalizations.of(context)!.policyText,
+                              strutStyle: StrutStyle(height: height * 0.003),
+                              textAlign: TextAlign.center,
+                              textScaleFactor: 1,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: widthg * 0.05),
+                            ),
+                          ),
+                        ]);
+                      }),
+                  AppLocalizations.of(context)!.policy,
+                  Icons.info,
                   Colors.black),
               Divider(
                 indent: 15,
