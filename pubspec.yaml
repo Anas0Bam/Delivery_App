@@ -57,6 +57,8 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   bottom_sheet: ^3.1.2
   quickalert: ^1.0.1
+  url_launcher: ^6.1.11
+  webview_flutter: ^4.2.2
 
 
 

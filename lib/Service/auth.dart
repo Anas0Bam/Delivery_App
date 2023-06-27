@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:deliver_app/Model/globals.dart';
 import 'package:deliver_app/Model/user-model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
 Future<String> getDecData({required String dcoId}) async {
   // if (await InternetOff()) {
@@ -82,3 +83,57 @@ Future<void> updateOrderStatus() async {
   DocumentSnapshot doc = snapshot.docs.first;
   doc.reference.update({'Order Status': true});
 }
+
+
+
+
+Future<List<Map<String, dynamic>>> printOrders() async {
+  final List<DocumentSnapshot> orders = await getOrdersForUser();
+  final List<Map<String, dynamic>> orderDataList = [];
+
+  for (final DocumentSnapshot order in orders) {
+    final data = order.data() as Map<String, dynamic>; // Explicitly cast to Map<String, dynamic>
+    orderDataList.add(data);
+  }
+
+  // Print the order data
+  orderDataList.forEach((orderData) {
+    print(orderData);
+    print(orderDataList.length);
+  });
+
+  return orderDataList;
+}
+
+Future<List<DocumentSnapshot>> getOrdersForUser() async {
+  final currentUser1 = FirebaseAuth.instance.currentUser!.uid;
+
+  final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      .collection('orders')
+      .where('User ID', isEqualTo: currentUser1)
+      .where('Order Status', isEqualTo: false)
+      .get();
+
+  return querySnapshot.docs;
+}
+
+Future<List<DocumentSnapshot>> reciveOrders() async {
+  final currentUser1 = FirebaseAuth.instance.currentUser!.uid;
+
+  final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      .collection('orders')
+      .where('User ID', isEqualTo: currentUser1)
+      .where('Order Status', isEqualTo: false)
+      .get();
+
+  final List<DocumentSnapshot> orders = querySnapshot.docs;
+
+  for (final DocumentSnapshot order in orders) {
+    final DocumentReference orderRef = order.reference;
+    await orderRef.update({'Order Status': true});
+  }
+
+  return orders;
+}
+
+
