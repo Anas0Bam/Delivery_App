@@ -525,7 +525,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           Client name: ${userAccount.fname}\n
                                                           Client phone: ${userAccount.phoneNumber}\n
                                                           Client email: ${userAccount.email}\n
-                                                          Shortcut Location: ${placeList[index].coordinates}\n
+                                                          client location: https://maps.google.com/?q=${neighborhood.lat},${neighborhood.lng}\n
+                                                          Shortcut Location for Restaurant: ${placeList[index].coordinates}\n
                                                           Orders: \n${orders}
                                                           """;
 

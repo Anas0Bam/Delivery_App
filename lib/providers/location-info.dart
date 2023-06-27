@@ -51,12 +51,12 @@ class LocationProvider {
           // Do something with the neighborhood and street information
           print('Neighborhood: $neighborhood');
           print('Street: $street');
-          return Neighborhood(neighborhood, street);
+          return Neighborhood(neighborhood, street,_position.latitude, _position.longitude);
           break;
         }
         break;
       } catch (e) {}
     }
-    return Neighborhood("0","0");
+    return Neighborhood("0","0",0,0);
   }
 }
