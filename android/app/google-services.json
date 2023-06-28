@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "715570673693",
+    "project_id": "deliveryapp-4237c",
+    "storage_bucket": "deliveryapp-4237c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715570673693:android:d58a3aae5287f9dbfb6ef4",
+        "android_client_info": {
+          "package_name": "com.example.mnadibapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "715570673693-cagl5nvvm3jpv7gs9dkhn7iu5h5m8q6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmkeYhCIiaa6C19juosrTd1E0InNtGfC4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "715570673693-cagl5nvvm3jpv7gs9dkhn7iu5h5m8q6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
