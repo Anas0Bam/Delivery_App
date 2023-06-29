@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String choice = "الجميع";
   bool isOrderOpen = true;
   bool isInOrder = false;
-bool isCoverLocation=false;
+  bool isCoverLocation = false;
   Timer? timer;
   var sss;
 
@@ -224,7 +224,8 @@ bool isCoverLocation=false;
       return true;
     }
   }
-  Future <void> checkInCoverdArea() async {
+
+  Future<void> checkInCoverdArea() async {
     for (int i = 0; i < placeList.length; i++) {
       if (neighborhood.neighborhood.contains(placeList[i].nieprhood)) {
         setState(() {
@@ -234,6 +235,7 @@ bool isCoverLocation=false;
       }
     }
   }
+
   Timer? _timer;
 
   @override
@@ -298,7 +300,7 @@ bool isCoverLocation=false;
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF32d951),
         onPressed: () async {
-          String url = "https://wa.me/966543437467";
+          String url = "https://wa.me/966560920902";
           if (await canLaunchUrl(Uri.parse(url))) {
             await launchUrl(
               Uri.parse(url),
@@ -370,25 +372,25 @@ bool isCoverLocation=false;
                 SizedBox(
                   height: height * 0.05,
                 ),
-                Container(
-                  padding:
-                      EdgeInsets.only(left: width * 0.05, right: width * 0.05),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-                      hintText: 'Search',
-                      filled: true,
-                      fillColor: colorVeryLightGray,
-                      prefixIcon: Icon(Icons.search),
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.transparent),
-                          borderRadius: BorderRadius.circular(20.0)),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: Colors.red)),
-                    ),
-                  ),
-                ),
+                // Container(
+                //   padding:
+                //       EdgeInsets.only(left: width * 0.05, right: width * 0.05),
+                //   child: TextField(
+                //     decoration: InputDecoration(
+                //       contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
+                //       hintText: 'Search',
+                //       filled: true,
+                //       fillColor: colorVeryLightGray,
+                //       prefixIcon: Icon(Icons.search),
+                //       enabledBorder: OutlineInputBorder(
+                //           borderSide: BorderSide(color: Colors.transparent),
+                //           borderRadius: BorderRadius.circular(20.0)),
+                //       border: OutlineInputBorder(
+                //           borderRadius: BorderRadius.circular(20.0),
+                //           borderSide: BorderSide(color: Colors.red)),
+                //     ),
+                //   ),
+                // ),
                 SizedBox(
                   height: height * 0.025,
                 ),
@@ -480,192 +482,206 @@ bool isCoverLocation=false;
                 ),
                 Container(
                   height: height * 0.28,
-                  child:  !isCoverLocation ? Container( margin: EdgeInsets.all(10),
-                    alignment: Alignment.center,
-                    child: Text(AppLocalizations.of(context)!.noplacecav , textAlign:TextAlign.center , style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                  ): ListView.builder(
-                    itemCount: placeList.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (!neighborhood.neighborhood
-                          .contains(placeList[index].nieprhood)) {
-                        print("false");
-                        return Container();
-                      } else {
-                        print("true");
-                        if (!(placeList[index].type.contains(choice) ||
-                            choice == "الجميع"))
-                          return Container();
-                        else
-                          return Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  await checkInOrder();
+                  child: !isCoverLocation
+                      ? Container(
+                          margin: EdgeInsets.all(10),
+                          alignment: Alignment.center,
+                          child: Text(
+                            AppLocalizations.of(context)!.noplacecav,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: placeList.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            if (!neighborhood.neighborhood
+                                .contains(placeList[index].nieprhood)) {
+                              print("false");
+                              return Container();
+                            } else {
+                              print("true");
+                              if (!(placeList[index].type.contains(choice) ||
+                                  choice == "الجميع"))
+                                return Container();
+                              else
+                                return Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        await checkInOrder();
 
-                                  isInOrder
-                                      ? Container()
-                                      : showModalBottomSheet(
-                                          isDismissible: true,
-                                          useSafeArea: true,
-                                          backgroundColor: Colors.transparent,
-                                          isScrollControlled: true,
-                                          context: context,
-                                          builder: (contex) {
-                                            return Dialog(
-                                              backgroundColor: Theme.of(context)
-                                                  .backgroundColor,
-                                              insetPadding:
-                                                  EdgeInsets.symmetric(
-                                                      vertical: 1),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                height: height * 0.50,
-                                                child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceAround,
-                                                    children: [
-                                                      Text(
-                                                        placeList[index].name,
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                width * 0.07,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      TextField(
-                                                          onChanged: (value) =>
-                                                              orders = value,
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .multiline,
-                                                          minLines: 5,
-                                                          maxLines: 10,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            suffixIcon: Icon(Icons
-                                                                .local_grocery_store_sharp),
-                                                            filled: true,
-                                                            fillColor:
-                                                                Colors.white,
-                                                            focusedBorder: OutlineInputBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20),
-                                                                borderSide: BorderSide(
-                                                                    color: Colors
-                                                                        .black)),
-                                                            enabledBorder:
-                                                                OutlineInputBorder(
-                                                              borderSide: BorderSide(
-                                                                  color: Colors
-                                                                      .black),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          20),
+                                        isInOrder
+                                            ? Container()
+                                            : showModalBottomSheet(
+                                                isDismissible: true,
+                                                useSafeArea: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                isScrollControlled: true,
+                                                context: context,
+                                                builder: (contex) {
+                                                  return Dialog(
+                                                    backgroundColor:
+                                                        Theme.of(context)
+                                                            .backgroundColor,
+                                                    insetPadding:
+                                                        EdgeInsets.symmetric(
+                                                            vertical: 1),
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20)),
+                                                      height: height * 0.50,
+                                                      child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                          children: [
+                                                            Text(
+                                                              placeList[index]
+                                                                  .name,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                  fontSize:
+                                                                      width *
+                                                                          0.07,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold),
                                                             ),
-                                                            label: Text(
-                                                                AppLocalizations.of(
-                                                                        context)!
-                                                                    .details),
-                                                            labelStyle: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 20),
-                                                          )),
-                                                      Text(
-                                                        AppLocalizations.of(
-                                                                context)!
-                                                            .fees,
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 20),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceAround,
-                                                        children: [
-                                                          MaterialButton(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius.all(
-                                                                          Radius.circular(
-                                                                              10))),
-                                                              color: Colors.red,
-                                                              onPressed: () {
-                                                                printOrders();
-                                                                print("yes");
-                                                                Navigator.pop(
-                                                                    context);
-                                                              },
-                                                              child: Text(
-                                                                  AppLocalizations.of(
+                                                            TextField(
+                                                                onChanged:
+                                                                    (value) =>
+                                                                        orders =
+                                                                            value,
+                                                                keyboardType:
+                                                                    TextInputType
+                                                                        .multiline,
+                                                                minLines: 5,
+                                                                maxLines: 10,
+                                                                decoration:
+                                                                    InputDecoration(
+                                                                  suffixIcon:
+                                                                      Icon(Icons
+                                                                          .local_grocery_store_sharp),
+                                                                  filled: true,
+                                                                  fillColor:
+                                                                      Colors
+                                                                          .white,
+                                                                  focusedBorder: OutlineInputBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
+                                                                      borderSide:
+                                                                          BorderSide(
+                                                                              color: Colors.black)),
+                                                                  enabledBorder:
+                                                                      OutlineInputBorder(
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                            color:
+                                                                                Colors.black),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20),
+                                                                  ),
+                                                                  label: Text(AppLocalizations.of(
                                                                           context)!
-                                                                      .cancel,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          width *
-                                                                              0.04,
+                                                                      .details),
+                                                                  labelStyle: TextStyle(
                                                                       fontWeight:
                                                                           FontWeight
-                                                                              .bold))),
-                                                          MaterialButton(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius: BorderRadius
-                                                                    .all(Radius
-                                                                        .circular(
-                                                                            10))),
-                                                            color: Colors
-                                                                .blueAccent,
-                                                            onPressed:
-                                                                () async {
-                                                              FirebaseFirestore
-                                                                  .instance
-                                                                  .collection(
-                                                                      'orders')
-                                                                  .doc()
-                                                                  .set({
-                                                                    'Place Name':
-                                                                        placeList[index]
-                                                                            .name
-                                                                            .trim(),
-                                                                    'Order Number':
-                                                                        setOfInts
-                                                                            .toString(),
-                                                                    'Order Date':
-                                                                        Time,
-                                                                    'Order Status':
-                                                                        orderstatus,
-                                                                    'Order Detials':
-                                                                        orders,
-                                                                    'User ID':
-                                                                        user
-                                                                  })
-                                                                  .then((value) =>
-                                                                      isOrderOpen =
-                                                                          false)
-                                                                  .then((value) =>
-                                                                      startTimer())
-                                                                  .then(
-                                                                      (value) {
-                                                                    String
-                                                                        message =
-                                                                        """
+                                                                              .bold,
+                                                                      fontSize:
+                                                                          20),
+                                                                )),
+                                                            Text(
+                                                              AppLocalizations.of(
+                                                                      context)!
+                                                                  .fees,
+                                                              style: TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20),
+                                                            ),
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceAround,
+                                                              children: [
+                                                                MaterialButton(
+                                                                    shape: RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.all(Radius.circular(
+                                                                                10))),
+                                                                    color: Colors
+                                                                        .red,
+                                                                    onPressed:
+                                                                        () {
+                                                                      printOrders();
+                                                                      print(
+                                                                          "yes");
+                                                                      Navigator.pop(
+                                                                          context);
+                                                                    },
+                                                                    child: Text(
+                                                                        AppLocalizations.of(context)!
+                                                                            .cancel,
+                                                                        style: TextStyle(
+                                                                            fontSize: width *
+                                                                                0.04,
+                                                                            fontWeight:
+                                                                                FontWeight.bold))),
+                                                                MaterialButton(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.all(
+                                                                              Radius.circular(10))),
+                                                                  color: Colors
+                                                                      .blueAccent,
+                                                                  onPressed:
+                                                                      () async {
+                                                                    FirebaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                            'orders')
+                                                                        .doc()
+                                                                        .set({
+                                                                          'Place Name': placeList[index]
+                                                                              .name
+                                                                              .trim(),
+                                                                          'Order Number':
+                                                                              setOfInts.toString(),
+                                                                          'Order Date':
+                                                                              Time,
+                                                                          'Order Status':
+                                                                              orderstatus,
+                                                                          'Order Detials':
+                                                                              orders,
+                                                                          'User ID':
+                                                                              user
+                                                                        })
+                                                                        .then((value) =>
+                                                                            isOrderOpen =
+                                                                                false)
+                                                                        .then((value) =>
+                                                                            startTimer())
+                                                                        .then(
+                                                                            (value) {
+                                                                          String
+                                                                              message =
+                                                                              """
                                                           
                                                           Restaurant name: ${placeList[index].name}\n
                                                           Restaurant type: ${placeList[index].type}\n
@@ -677,139 +693,141 @@ bool isCoverLocation=false;
                                                           Orders: \n${orders}
                                                           """;
 
-                                                                    sendMessage(
-                                                                        message);
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  });
-                                                            },
-                                                            child: Text(
-                                                              AppLocalizations.of(
-                                                                      context)!
-                                                                  .send,
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      width *
-                                                                          0.04,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
+                                                                          sendMessage(
+                                                                              message);
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        });
+                                                                  },
+                                                                  child: Text(
+                                                                    AppLocalizations.of(
+                                                                            context)!
+                                                                        .send,
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            width *
+                                                                                0.04,
+                                                                        fontWeight:
+                                                                            FontWeight.bold),
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ]),
-                                              ),
-                                            );
-                                          });
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15)),
-                                    color: colorLightGray,
-                                    border: Border.all(color: colorDarkGray),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(
-                                            0.3), // Replace with your desired shadow color
-                                        blurRadius:
-                                            5, // Replace with your desired blur radius
-                                        spreadRadius:
-                                            0, // Set to 0 to restrict shadow to the bottom
-                                        offset: Offset(0,
-                                            8), // Adjust the offset for desired shadow position
+                                                          ]),
+                                                    ),
+                                                  );
+                                                });
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
+                                          color: colorLightGray,
+                                          border:
+                                              Border.all(color: colorDarkGray),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black.withOpacity(
+                                                  0.3), // Replace with your desired shadow color
+                                              blurRadius:
+                                                  5, // Replace with your desired blur radius
+                                              spreadRadius:
+                                                  0, // Set to 0 to restrict shadow to the bottom
+                                              offset: Offset(0,
+                                                  8), // Adjust the offset for desired shadow position
+                                            ),
+                                          ],
+                                        ),
+                                        margin: EdgeInsets.only(
+                                            left: width * 0.05, right: 2),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: height * 0.005,
+                                            horizontal: width * 0.03),
+                                        //I have change thw width to 0.03
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                                width: width * 0.12,
+                                                child: Text(
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .opentext,
+                                                    style: TextStyle(
+                                                        color:
+                                                            Color(0xFF49EE20),
+                                                        fontSize: 18))),
+                                            Image.asset(
+                                              placeList[index].image,
+                                              height: height * 0.2,
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.12,
+                                            ),
+                                            // Container(
+                                            //   child: InkWell(
+                                            //     child: Container(
+                                            //       height: 50,
+                                            //       width: 45,
+                                            //       decoration: BoxDecoration(
+                                            //         color: colorVeryLightGray,
+                                            //         borderRadius: BorderRadius.all(
+                                            //             Radius.circular(10)),
+                                            //         boxShadow: [
+                                            //           BoxShadow(
+                                            //             color: Colors.grey.withOpacity(
+                                            //                 0.5), // Replace with your desired shadow color
+                                            //             spreadRadius:
+                                            //                 1, // Replace with your desired spread radius
+                                            //             blurRadius:
+                                            //                 5, // Replace with your desired blur radius
+                                            //             offset: Offset(0,
+                                            //                 3), // Replace with your desired offset
+                                            //           ),
+                                            //         ],
+                                            //       ),
+                                            //       child: Icon(
+                                            //         Icons.favorite_border,
+                                            //         color: Color(0xFFFF9832),
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // )
+                                          ],
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                  margin: EdgeInsets.only(
-                                      left: width * 0.05, right: 2),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: height * 0.005,
-                                      horizontal: width * 0.03),
-                                  //I have change thw width to 0.03
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                          width: width * 0.12,
-                                          child: Text(
-                                              AppLocalizations.of(context)!
-                                                  .opentext,
-                                              style: TextStyle(
-                                                  color: Color(0xFF49EE20),
-                                                  fontSize: 18))),
-                                      Image.asset(
-                                        placeList[index].image,
-                                        height: height * 0.2,
-                                      ),
-                                      SizedBox(
-                                        width: width * 0.12,
-                                      ),
-                                      // Container(
-                                      //   child: InkWell(
-                                      //     child: Container(
-                                      //       height: 50,
-                                      //       width: 45,
-                                      //       decoration: BoxDecoration(
-                                      //         color: colorVeryLightGray,
-                                      //         borderRadius: BorderRadius.all(
-                                      //             Radius.circular(10)),
-                                      //         boxShadow: [
-                                      //           BoxShadow(
-                                      //             color: Colors.grey.withOpacity(
-                                      //                 0.5), // Replace with your desired shadow color
-                                      //             spreadRadius:
-                                      //                 1, // Replace with your desired spread radius
-                                      //             blurRadius:
-                                      //                 5, // Replace with your desired blur radius
-                                      //             offset: Offset(0,
-                                      //                 3), // Replace with your desired offset
-                                      //           ),
-                                      //         ],
-                                      //       ),
-                                      //       child: Icon(
-                                      //         Icons.favorite_border,
-                                      //         color: Color(0xFFFF9832),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                width: width * 0.6,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
+                                    ),
+                                    Container(
+                                      alignment: Alignment.center,
                                       width: width * 0.6,
-                                      child: AutoSizeText(
-                                        placeList[index].name,
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18),
-                                        minFontSize: 10,
-                                        maxLines: 2,
+                                      child: Column(
+                                        children: [
+                                          SizedBox(
+                                            width: width * 0.6,
+                                            child: AutoSizeText(
+                                              placeList[index].name,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18),
+                                              minFontSize: 10,
+                                              maxLines: 2,
+                                            ),
+                                            // child: AutoSizeText(
+                                            //   'Hello Geeks! We will break this line into 3 lines !!ssssssssssssssss sssssss',
+                                            //   style: TextStyle(fontSize: 30.0),
+                                            //   maxLines: 1,
+                                            // ),
+                                          )
+                                        ],
                                       ),
-                                      // child: AutoSizeText(
-                                      //   'Hello Geeks! We will break this line into 3 lines !!ssssssssssssssss sssssss',
-                                      //   style: TextStyle(fontSize: 30.0),
-                                      //   maxLines: 1,
-                                      // ),
                                     )
                                   ],
-                                ),
-                              )
-                            ],
-                          );
-                      }
-                    },
-                  ),
+                                );
+                            }
+                          },
+                        ),
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: width * 0.05),

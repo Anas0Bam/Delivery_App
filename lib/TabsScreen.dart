@@ -6,7 +6,7 @@ import 'package:mnadibapp/Screens/home-screen.dart';
 import 'package:mnadibapp/Service/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'Screens/more.dart';
 
 import 'Screens/cart.dart';
@@ -24,6 +24,7 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   bool isEmailVerified = false;
+  bool canResendEmail = false;
   Timer? timer;
   void displayMessage(String message) {
     showDialog(
@@ -31,7 +32,7 @@ class _TabsScreenState extends State<TabsScreen> {
         builder: (context) => AlertDialog(
               title: Text(
                 message,
-                style: TextStyle(color: Colors.red),
+                style: TextStyle(color: Colors.black),
               ),
             ));
   }
@@ -42,22 +43,18 @@ class _TabsScreenState extends State<TabsScreen> {
     super.initState();
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
     if (!isEmailVerified) {
-      sendVerificationEmail();
+      Sendverficiationme();
       timer = Timer.periodic(
         Duration(seconds: 3),
         (_) => checkEmailVerified(),
       );
-    } else {
-      getDecData(dcoId: FirebaseAuth.instance.currentUser!.uid);
-      print(userAccount.toString());
-      // getOrders(dcoId: FirebaseAuth.instance.currentUser!.uid);
-      // print(orderList);
     }
   }
 
   @override
   void dispose() {
     timer?.cancel();
+
     // TODO: implement dispose
     super.dispose();
   }
@@ -70,12 +67,19 @@ class _TabsScreenState extends State<TabsScreen> {
     if (isEmailVerified) timer?.cancel();
   }
 
-  Future sendVerificationEmail() async {
+  Future Sendverficiationme() async {
     try {
       final user = FirebaseAuth.instance.currentUser!;
       await user.sendEmailVerification();
+      setState(() => canResendEmail = false);
+      await Future.delayed(Duration(seconds: 45));
+      setState(() => canResendEmail = true);
     } catch (e) {
-      displayMessage(e.toString());
+      if (e == 'Try again later.') {
+        displayMessage('Please wait for 1 mint till you send back again');
+      } else {
+        displayMessage('Please wait for 1 min till you reset the message');
+      }
     }
   }
 
@@ -137,5 +141,57 @@ class _TabsScreenState extends State<TabsScreen> {
                 // )
               ]),
         )
-      : VerifyEmailPageState();
+      : Scaffold(
+          body: SafeArea(
+            child: Center(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      textAlign: TextAlign.center,
+                      AppLocalizations.of(context)!.verfi +
+                          "${FirebaseAuth.instance.currentUser!.email}",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton.icon(
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateColor.resolveWith(
+                              (states) => Color(9))),
+                      icon: Icon(
+                        Icons.email,
+                        size: 25,
+                      ),
+                      label: !canResendEmail
+                          ? Text(
+                              AppLocalizations.of(context)!.wait,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: MediaQuery.of(context).size.width *
+                                      0.045),
+                            )
+                          : Text(
+                              AppLocalizations.of(context)!.resend,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                      onPressed: canResendEmail ? Sendverficiationme : null,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (states) => Colors.red.shade700)),
+                        onPressed: () => FirebaseAuth.instance.signOut(),
+                        child: Text(AppLocalizations.of(context)!.cancel))
+                  ]),
+            ),
+          ),
+        );
 }

@@ -65,7 +65,8 @@
     "placeName":"Place Name",
     "orderdate":"Order Date",
     "all":"All",
-    "noplacecav":"Sorry for the invoice but we do not not cover your area yet"
+    "noplacecav":"Sorry for the invoice but we do not not cover your area yet",
+    "wait":"Please wait for 1 minute"
 
     }
   
