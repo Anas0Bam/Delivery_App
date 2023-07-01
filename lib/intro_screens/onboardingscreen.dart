@@ -32,64 +32,64 @@ class _OnboardingscreenState extends State<Onboardingscreen> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var widthg = MediaQuery.of(context).size.width;
-    return MaterialApp(
-      home: Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.background,
-          body: Stack(children: [
-            PageView(
-              onPageChanged: (value) => setState(() {
-                onLastPage = (value == 2);
-              }),
-              controller: _controller,
-              children: [
-                Intropage1(
-                    imagetitle: 'assets/12.png',
-                    titletext: AppLocalizations.of(context)!.headerOnboarding1,
-                    subtitle: AppLocalizations.of(context)!.subtelOnboarding1),
-                Intropage1(
-                    imagetitle: 'assets/loc.png',
-                    titletext: AppLocalizations.of(context)!.headerOnboarding2,
-                    subtitle: AppLocalizations.of(context)!.subtelOnboarding2),
-                Intropage1(
-                    imagetitle: 'assets/intro1.png',
-                    titletext: AppLocalizations.of(context)!.headerOnboarding3,
-                    subtitle: ''),
-              ],
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.background,
+      body: Stack(children: [
+        PageView(
+          onPageChanged: (value) => setState(() {
+            onLastPage = (value == 2);
+          }),
+          controller: _controller,
+          children: [
+            Intropage1(
+                imagetitle: 'assets/12.png',
+                titletext: AppLocalizations.of(context)!.headerOnboarding1,
+                subtitle: AppLocalizations.of(context)!.subtelOnboarding1),
+            Intropage1(
+                imagetitle: 'assets/loc.png',
+                titletext: AppLocalizations.of(context)!.headerOnboarding2,
+                subtitle: AppLocalizations.of(context)!.subtelOnboarding2),
+            Intropage1(
+                imagetitle: 'assets/intro1.png',
+                titletext: AppLocalizations.of(context)!.headerOnboarding3,
+                subtitle: ''),
+          ],
+        ),
+        Align(
+            alignment: const Alignment(0.75, .75),
+            child: onLastPage
+                ? InkWell(
+                    child: Text(
+                      AppLocalizations.of(context)!.login,
+                      style: TextStyle(
+                          fontSize: widthg * 0.050,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return AuthPage();
+                      }));
+                    })
+                : IconButton(
+                    splashRadius: 20,
+                    splashColor: Theme.of(context).colorScheme.background,
+                    onPressed: () => _controller.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.easeIn),
+                    icon: const Icon(Icons.arrow_forward))),
+        Align(
+          alignment: const Alignment(-0.75, 0.75),
+          child: SmoothPageIndicator(
+            effect: SwapEffect(
+              dotColor: Colors.black.withOpacity(0.12),
+              activeDotColor: Colors.white,
             ),
-            Align(
-                alignment: const Alignment(  0.75 , .75),
-                child: onLastPage
-                    ? InkWell(
-                        child: Text(
-                          AppLocalizations.of(context)!.login,
-                          style: TextStyle(
-                              fontSize:widthg* 0.050, fontWeight: FontWeight.bold),
-                        ),
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return AuthPage();
-                          }));
-                        })
-                    : IconButton(
-                        splashRadius: 20,
-                        splashColor: Theme.of(context).colorScheme.background,
-                        onPressed: () => _controller.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeIn),
-                        icon: const Icon(Icons.arrow_forward))),
-            Align(
-              alignment: const Alignment(-0.75, 0.75),
-              child: SmoothPageIndicator(
-                effect: SwapEffect(
-                  dotColor: Colors.black.withOpacity(0.12),
-                  activeDotColor: Colors.white,
-                ),
-                controller: _controller,
-                count: 3,
-              ),
-            )
-          ])),
+            controller: _controller,
+            count: 3,
+          ),
+        )
+      ]),
     );
   }
 }
