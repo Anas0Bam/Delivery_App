@@ -41,6 +41,7 @@ class _TabsScreenState extends State<TabsScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Navigator.of(context);
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
     if (!isEmailVerified) {
       Sendverficiationme();
@@ -170,6 +171,7 @@ class _TabsScreenState extends State<TabsScreen> {
                       label: !canResendEmail
                           ? Text(
                               AppLocalizations.of(context)!.wait,
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: MediaQuery.of(context).size.width *
@@ -177,6 +179,7 @@ class _TabsScreenState extends State<TabsScreen> {
                             )
                           : Text(
                               AppLocalizations.of(context)!.resend,
+                              textAlign: TextAlign.center,
                               style: TextStyle(fontSize: 20),
                             ),
                       onPressed: canResendEmail ? Sendverficiationme : null,

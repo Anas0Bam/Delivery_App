@@ -31,25 +31,26 @@ class _LoginPageState extends State<LoginPage> {
         child: CircularProgressIndicator(),
       ),
     );
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailcontroller.text,
-        password: passwordcontroller.text,
-      );
+    if (context.mounted)
+      try {
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailcontroller.text,
+          password: passwordcontroller.text,
+        );
 
-      if (context.mounted) Navigator.pop(context);
-    } on FirebaseAuthException catch (e) {
-      Navigator.pop(context);
+        if (context.mounted) Navigator.pop(context);
+      } on FirebaseAuthException catch (e) {
+        Navigator.pop(context);
 
-      if (e.code == 'user-not-found') {
-        displayMessage(
-            'It seems that you are not register yet, please go ahead and register.');
-      } else if (e.code == 'wrong-password') {
-        displayMessage('Incorrect password');
-      } else if (e.code == 'unknown') {
-        displayMessage('Enter your information');
+        if (e.code == 'user-not-found') {
+          displayMessage(
+              'It seems that you are not register yet, please go ahead and register.');
+        } else if (e.code == 'wrong-password') {
+          displayMessage('Incorrect password');
+        } else if (e.code == 'unknown') {
+          displayMessage('Enter your information');
+        }
       }
-    }
   }
 
   void displayMessage(String message) {

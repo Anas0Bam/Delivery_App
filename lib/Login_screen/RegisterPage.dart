@@ -48,7 +48,6 @@ class _RegisterPageState extends State<RegisterPage> {
           password: _passwordcontroller.text,
         );
         // Navigator.pop(context);
-        Navigator.pop(context);
 
         FirebaseFirestore.instance
             .collection('Users')
@@ -75,13 +74,14 @@ class _RegisterPageState extends State<RegisterPage> {
         Navigator.pop(context);
         displayMessage('Enter the rest of the information');
       }
+      Navigator.of(context);
     } on FirebaseAuthException catch (e) {
       // if (e.code == 'unknown') {
       Navigator.pop(context);
-      if (_emailcontroller.text.isEmpty &&
-          _passwordcontroller.text.isEmpty &&
-          _confirmPasswordTextController.text.isEmpty &&
-          _Phonenumber.text.isEmpty &&
+      if (_emailcontroller.text.trim().isEmpty &&
+          _passwordcontroller.text.trim().isEmpty &&
+          _confirmPasswordTextController.text.trim().isEmpty &&
+          _Phonenumber.text.trim().isEmpty &&
           _Address.text.isEmpty) {
         displayMessage('Please fill up your information');
       } else if (e.code == 'invaild-email') {
@@ -101,9 +101,9 @@ class _RegisterPageState extends State<RegisterPage> {
       } else {
         displayMessage(e.code);
       }
-
-      // }
+      Navigator.of(context);
     }
+    Navigator.of(context);
   }
 
 //  if (e.code == 'unknown') {
